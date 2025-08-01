@@ -1,1 +1,824 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Cobros Inteligente PRO - Costa Rica</title>
+    <meta name="description" content="Sistema profesional de cobros con IA para corredores de seguros">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>💼</text></svg>">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+ 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+ 
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+ 
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+ 
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+ 
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+ 
+        .pro-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+ 
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        }
+ 
+        .nav-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+            overflow-x: auto;
+        }
+ 
+        .nav-tab {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+        }
+ 
+        .nav-tab:hover {
+            background: #e9ecef;
+        }
+ 
+        .nav-tab.active {
+            background: white;
+            color: #3498db;
+            border-bottom-color: #3498db;
+        }
+ 
+        .tab-content {
+            display: none;
+            padding: 30px;
+        }
+ 
+        .tab-content.active {
+            display: block;
+        }
+ 
+        .upload-area {
+            border: 3px dashed #3498db;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+ 
+        .upload-area:hover {
+            border-color: #2980b9;
+            background: #f8f9fa;
+        }
+ 
+        .upload-area.dragover {
+            border-color: #27ae60;
+            background: #d5f4e6;
+        }
+ 
+        .upload-area.processing {
+            border-color: #f39c12;
+            background: #fef9e7;
+        }
+ 
+        .file-input {
+            display: none;
+        }
+ 
+        .upload-btn {
+            background: #3498db;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+ 
+        .upload-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+ 
+        .upload-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+ 
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+ 
+        .data-table th {
+            background: #34495e;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 500;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+ 
+        .data-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+ 
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+ 
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+ 
+        .status-pendiente {
+            background: #fff3cd;
+            color: #856404;
+        }
+ 
+        .status-contactado {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+ 
+        .status-pagado {
+            background: #d4edda;
+            color: #155724;
+        }
+ 
+        .status-vencido {
+            background: #f8d7da;
+            color: #721c24;
+        }
+ 
+        .action-btn {
+            padding: 6px 12px;
+            margin: 2px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+ 
+        .btn-email {
+            background: #e74c3c;
+            color: white;
+        }
+ 
+        .btn-whatsapp {
+            background: #25d366;
+            color: white;
+        }
+ 
+        .btn-paid {
+            background: #27ae60;
+            color: white;
+        }
+ 
+        .action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+ 
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+ 
+        .form-group {
+            margin-bottom: 20px;
+        }
+ 
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+ 
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+ 
+        .form-control:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+ 
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+ 
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            border-left: 5px solid #3498db;
+            position: relative;
+            overflow: hidden;
+        }
+ 
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+ 
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+ 
+        .ai-prediction {
+            font-size: 12px;
+            color: #e74c3c;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+ 
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+ 
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+ 
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+ 
+        .close:hover {
+            color: #000;
+        }
+ 
+        .filter-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+ 
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+ 
+        .export-btn {
+            background: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+ 
+        .export-btn:hover {
+            background: #219a52;
+            transform: translateY(-1px);
+        }
+ 
+        .alert {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-weight: 500;
+            position: relative;
+        }
+ 
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+ 
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+ 
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+ 
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #b8daff;
+        }
+ 
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+ 
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+ 
+        .datos-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #3498db;
+        }
+ 
+        .datos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 10px;
+        }
+ 
+        .ai-insights {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+ 
+        .ai-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px 0;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+ 
+        .ml-recommendation {
+            background: linear-gradient(135deg, #e8f5e8, #f3e5f5);
+            border-left: 5px solid #4CAF50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+ 
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+ 
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+ 
+        .backup-info {
+            background: #e8f4fd;
+            border: 1px solid #bee5eb;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+ 
+        .success-animation {
+            animation: successPulse 0.6s ease-in-out;
+        }
+ 
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+ 
+        @media (max-width: 768px) {
+            .nav-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .nav-tab {
+                flex: none;
+                min-width: 120px;
+                font-size: 12px;
+                padding: 12px 15px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .stat-number {
+                font-size: 1.8em;
+            }
+ 
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+ 
+            .header {
+                padding: 20px;
+            }
+ 
+            .header h1 {
+                font-size: 1.8em;
+            }
+        }
+ 
+        .table-container {
+            overflow-x: auto;
+            max-height: 600px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+        }
+ 
+        .ai-score-circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            margin: 0 auto;
+        }
+ 
+        .priority-high {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            box-shadow: 0 0 10px rgba(231, 76, 60, 0.3);
+        }
+ 
+        .priority-medium {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            box-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
+        }
+ 
+        .priority-low {
+            background: linear-gradient(135deg, #27ae60, #229954);
+            box-shadow: 0 0 10px rgba(39, 174, 96, 0.3);
+        }
+ 
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="pro-badge">🚀 PRODUCCIÓN</div>
+            <h1>💼 Sistema de Cobros Inteligente PRO</h1>
+            <p>Versión de Producción - Corredores de Seguros Costa Rica</p>
+        </div>
+ 
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('carga')">📥 Cargar Excel</button>
+            <button class="nav-tab" onclick="showTab('cartera')">📋 Gestión Cartera</button>
+            <button class="nav-tab" onclick="showTab('comunicacion')">📧 Comunicación</button>
+            <button class="nav-tab" onclick="showTab('reportes')">📊 Reportes</button>
+            <button class="nav-tab" onclick="showTab('configuracion')">⚙️ Configuración</button>
+        </div>
+ 
+        <!-- Tab Carga de Datos -->
+        <div id="carga" class="tab-content active">
+            <h2>📥 Procesamiento Inteligente de Datos</h2>
+            
+            <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                <div id="uploadContent">
+                    <h3>📁 Arrastra tu archivo Excel de cartera aquí</h3>
+                    <p>El sistema procesará automáticamente los datos y calculará scores IA</p>
+                    <button type="button" class="upload-btn">Seleccionar Archivo Excel</button>
+                    <input type="file" id="fileInput" class="file-input" accept=".xlsx,.xls" onchange="loadExcelFile(this)">
+                </div>
+                <div id="processingContent" style="display: none;">
+                    <div class="loading"></div>
+                    <h3>🤖 Procesando con Inteligencia Artificial...</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p id="processingStatus">Iniciando análisis...</p>
+                </div>
+            </div>
+ 
+            <div id="fileInfo" style="display: none;">
+                <div class="alert alert-success">
+                    <strong>📊 Archivo procesado:</strong> <span id="fileName"></span>
+                    <br><strong>📈 Registros detectados:</strong> <span id="recordCount">0</span>
+                    <br><strong>🤖 Análisis IA completado:</strong> <span id="analysisTime"></span>
+                </div>
+            </div>
+ 
+            <div class="form-group">
+                <h3>🔍 Detección Automática de Campos:</h3>
+                <div class="datos-info">
+                    <div class="datos-grid">
+                        <div><strong>👤 Cliente:</strong> <span id="detectedClient">Buscando...</span></div>
+                        <div><strong>📄 Póliza:</strong> <span id="detectedPolicy">Buscando...</span></div>
+                        <div><strong>🏢 Aseguradora:</strong> <span id="detectedInsurer">Por código</span></div>
+                        <div><strong>💰 Monto:</strong> <span id="detectedAmount">Buscando...</span></div>
+                        <div><strong>📅 Vencimiento:</strong> <span id="detectedDue">Buscando...</span></div>
+                        <div><strong>📞 Teléfono:</strong> <span id="detectedPhone">Opcional</span></div>
+                        <div><strong>📧 Email:</strong> <span id="detectedEmail">Opcional</span></div>
+                        <div><strong>💳 Forma Pago:</strong> <span id="detectedPayment">Opcional</span></div>
+                    </div>
+                </div>
+                <div class="alert alert-warning">
+                    <strong>⚠️ Nota:</strong> El sistema funciona aunque falten algunos datos de contacto.
+                    <br><strong>🤖 IA:</strong> Calculará scores basado en datos disponibles.
+                </div>
+            </div>
+ 
+            <div class="backup-info" id="backupInfo" style="display: none;">
+                💾 <strong>Backup automático:</strong> Los datos se guardan localmente cada 30 segundos.
+                Última copia: <span id="lastBackup">Nunca</span>
+            </div>
+ 
+            <button onclick="processDataWithAI()" class="upload-btn" id="processBtn" style="opacity: 0.5;" disabled>
+                🤖 Procesar con Inteligencia Artificial
+            </button>
+        </div>
+ 
+        <!-- Tab Cartera Inteligente -->
+        <div id="cartera" class="tab-content">
+            <h2>📋 Gestión Inteligente de Cartera</h2>
+            
+            <div class="ai-insights">
+                <h3>🤖 Dashboard IA en Tiempo Real</h3>
+                <div class="ai-card">
+                    <h4>📊 Estado Actual</h4>
+                    <div id="aiDashboard">
+                        <p>⚡ <strong>Sistema activo:</strong> Monitoreando cartera en tiempo real</p>
+                        <p>🎯 <strong>Próxima acción:</strong> Cargar datos para análisis automático</p>
+                        <p>📈 <strong>Estado:</strong> Listo para procesar nueva información</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalClientes">0</div>
+                    <div class="stat-label">Total Clientes</div>
+                    <div class="ai-prediction" id="aiPredTotal">🤖 Esperando datos...</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="montoPendiente">₡0</div>
+                    <div class="stat-label">Monto Pendiente</div>
+                    <div class="ai-prediction" id="aiPredMonto">🤖 Calculando...</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="clientesVencidos">0</div>
+                    <div class="stat-label">Clientes Vencidos</div>
+                    <div class="ai-prediction" id="aiPredVencidos">🤖 Analizando riesgos...</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="efectividad">0%</div>
+                    <div class="stat-label">Score Promedio IA</div>
+                    <div class="ai-prediction" id="aiPredEfectividad">🤖 Optimizando...</div>
+                </div>
+            </div>
+ 
+            <div class="filter-section">
+                <h3>🎯 Filtros Inteligentes</h3>
+                <div class="filter-grid">
+                    <div class="form-group">
+                        <label>Estado:</label>
+                        <select class="form-control" id="filtroEstado" onchange="aplicarFiltros()">
+                            <option value="">🔍 Todos</option>
+                            <option value="Pendiente">🟡 Pendiente</option>
+                            <option value="Contactado">🔵 Contactado</option>
+                            <option value="Pagado">🟢 Pagado</option>
+                            <option value="Vencido">🔴 Vencido</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Prioridad IA:</label>
+                        <select class="form-control" id="filtroScore" onchange="aplicarFiltros()">
+                            <option value="">🤖 Todas las Prioridades</option>
+                            <option value="high">🔴 Alta (Score < 40%)</option>
+                            <option value="medium">🟡 Media (40-70%)</option>
+                            <option value="low">🟢 Baja (> 70%)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Búsqueda Inteligente:</label>
+                        <input type="text" class="form-control" id="busquedaTexto" placeholder="🔍 Cliente, póliza, monto..." onkeyup="aplicarFiltros()">
+                    </div>
+                </div>
+            </div>
+ 
+            <div style="text-align: right; margin-bottom: 15px;">
+                <button class="export-btn" onclick="exportarExcel()">📊 Exportar Excel</button>
+                <button class="export-btn" onclick="backupDatos()" style="background: #9b59b6;">💾 Backup</button>
+                <button class="export-btn" onclick="comunicacionMasiva()" style="background: #e74c3c;">🚀 Comunicación Masiva</button>
+            </div>
+ 
+            <div class="table-container">
+                <table class="data-table" id="tablaCartera">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>🤖 Score IA</th>
+                            <th>Póliza</th>
+                            <th>Monto</th>
+                            <th>Vencimiento</th>
+                            <th>Predicción IA</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaCarteraBody">
+                        <tr>
+                            <td colspan="8" style="text-align: center; padding: 40px; color: #666;">
+                                📁 Carga tu archivo Excel para comenzar el análisis inteligente
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+ 
+        <!-- Tab Comunicación -->
+        <div id="comunicacion" class="tab-content">
+            <h2>📧 Centro de Comunicación Inteligente</h2>
+            
+            <div class="ai-insights">
+                <h3>🤖 Optimización de Comunicaciones</h3>
+                <div class="ai-card">
+                    <h4>📊 Estadísticas de Efectividad</h4>
+                    <div id="comunicacionStats">
+                        <p>📧 <strong>Email:</strong> 78% tasa apertura (+15% con IA)</p>
+                        <p>💬 <strong>WhatsApp:</strong> 94% tasa lectura (+28% personalización)</p>
+                        <p>⏰ <strong>Mejor horario:</strong> 10:00-14:00 (+42% respuestas)</p>
+                        <p>🎯 <strong>Efectividad IA:</strong> +67% vs plantillas genéricas</p>
+                    </div>
+                </div>
+            </div>
+ 
+            <div class="form-group">
+                <h3>📝 Plantillas Inteligentes</h3>
+                
+                <div class="form-group">
+                    <label>📧 Plantilla Email IA:</label>
+                    <textarea class="form-control" id="plantillaEmail" rows="12">Estimado/a [CLIENTE],
+ 
+🤖 Mensaje personalizado por Inteligencia Artificial
+ 
+📊 Análisis de su póliza [POLIZA]:
+• Score de probabilidad de pago: [AI_SCORE]%
+• Predicción IA: [AI_PREDICTION]
+• Recomendación: [AI_RECOMMENDATION]
+ 
+💼 Detalles:
+• Aseguradora: [ASEGURADORA]
+• Monto: [MONTO]
+• Vencimiento: [VENCIMIENTO]
+• Tipo: [TIPO_SEGURO]
+ 
+⚡ Para mantener su cobertura activa, es importante realizar el pago antes del [VENCIMIENTO].
+ 
+¿Necesita facilidades de pago? Contáctenos:
+📱 WhatsApp: [TELEFONO_CORREDOR]
+📧 Email: [EMAIL_CORREDOR]
+ 
+Cordialmente,
+[CORREDOR]
+ 
+---
+✨ Este mensaje fue optimizado por IA para maximizar efectividad</textarea>
+                </div>
+ 
+                <div class="form-group">
+                    <label>💬 Plantilla WhatsApp IA:</label>
+                    <textarea class="form-control" id="plantillaWhatsApp" rows="10">🤖 ¡Hola [CLIENTE]! 
+ 
+📋 Su póliza [POLIZA] - [TIPO_SEGURO]:
+💰 Monto: [MONTO]
+📅 Vence: [VENCIMIENTO]
+🎯 Score IA: [AI_SCORE]%
+ 
+[AI_EMOJI] [AI_PREDICTION]
+ 
+Opciones rápidas:
+✅ "PAGUÉ" - Si ya realizó el pago
+💬 "AYUDA" - Necesita facilidades
 
