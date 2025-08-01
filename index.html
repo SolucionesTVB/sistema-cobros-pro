@@ -1,146 +1,45 @@
-📞 "LLAMAR" - Prefiere contacto telefónico
-
-🤖 Sistema IA recomienda: [AI_RECOMMENDATION]
-
-Saludos,
-[CORREDOR] 😊</textarea>
+<input type="range" class="form-control" id="aiSensitivity" min="1" max="10" value="7" 
+                           onchange="document.getElementById('sensitivityValue').textContent = this.value">
+                    <small>Nivel: <span id="sensitivityValue">7</span>/10</small>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <h3>🚀 Herramientas de Envío</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                    <button class="upload-btn" onclick="enviarEmailsIA()" style="background: #e74c3c;">
-                        📧 Envío Email IA
-                        <br><small>Selección automática</small>
-                    </button>
-                    <button class="upload-btn" onclick="enviarWhatsAppIA()" style="background: #25d366;">
-                        💬 WhatsApp IA
-                        <br><small>Horario optimizado</small>
-                    </button>
-                    <button class="upload-btn" onclick="campaniaCompleta()" style="background: #9b59b6;">
-                        ✨ Campaña Completa
-                        <br><small>Multi-canal inteligente</small>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tab Reportes -->
-        <div id="reportes" class="tab-content">
-            <h2>📊 Centro de Reportes Inteligentes</h2>
-            
-            <div class="ai-insights">
-                <h3>🎯 Insights Ejecutivos</h3>
-                <div class="ai-card">
-                    <h4>📈 Análisis Predictivo Avanzado</h4>
-                    <div>
-                        <p>💰 <strong>Proyección 30 días:</strong> Calculando...</p>
-                        <p>📊 <strong>Eficiencia:</strong> +40% vs método tradicional</p>
-                        <p>🎯 <strong>Clientes críticos:</strong> Identificando...</p>
-                        <p>⚡ <strong>Recomendación:</strong> Carga datos para análisis</p>
-                    </div>
-                </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
-                <button class="upload-btn" onclick="reporteEjecutivo()" style="background: #2c3e50; padding: 20px; height: auto;">
-                    <div style="font-size: 18px; margin-bottom: 10px;">👔</div>
-                    <div><strong>Reporte Ejecutivo</strong></div>
-                    <small style="display: block; margin-top: 5px; opacity: 0.8;">Dashboard completo con KPIs</small>
-                </button>
-                
-                <button class="upload-btn" onclick="analisisRentabilidad()" style="background: #27ae60; padding: 20px; height: auto;">
-                    <div style="font-size: 18px; margin-bottom: 10px;">💰</div>
-                    <div><strong>Análisis Rentabilidad</strong></div>
-                    <small style="display: block; margin-top: 5px; opacity: 0.8;">ROI por aseguradora</small>
-                </button>
-                
-                <button class="upload-btn" onclick="prediccionFlujo()" style="background: #3498db; padding: 20px; height: auto;">
-                    <div style="font-size: 18px; margin-bottom: 10px;">📈</div>
-                    <div><strong>Predicción Flujo</strong></div>
-                    <small style="display: block; margin-top: 5px; opacity: 0.8;">Proyección 90 días IA</small>
-                </button>
-            </div>
-
-            <div id="reporteContainer">
-                <div style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 10px;">
-                    <h3 style="color: #666;">📊 Centro de Reportes Inteligentes</h3>
-                    <p style="color: #666;">Selecciona un tipo de reporte para generar análisis detallados</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tab Configuración -->
-        <div id="configuracion" class="tab-content">
-            <h2>⚙️ Configuración del Sistema</h2>
-            
-            <div class="form-group">
-                <h3>👤 Información del Corredor</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-                    <div>
-                        <label>Nombre Completo:</label>
-                        <input type="text" class="form-control" id="nombreCorrector" placeholder="Su nombre completo">
-                    </div>
-                    <div>
-                        <label>Teléfono WhatsApp:</label>
-                        <input type="text" class="form-control" id="telefonoCorrector" placeholder="8888-7777">
-                    </div>
-                    <div>
-                        <label>Email Profesional:</label>
-                        <input type="email" class="form-control" id="emailCorrector" placeholder="corredor@ejemplo.com">
-                    </div>
-                </div>
-            </div>
-
-            <div class="ai-insights">
-                <h3>🤖 Configuración de Inteligencia Artificial</h3>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-                    <div class="form-group">
-                        <label>🎯 Sensibilidad del Score IA:</label>
-                        <input type="range" class="form-control" id="aiSensitivity" min="1" max="10" value="7" 
-                               onchange="document.getElementById('sensitivityValue').textContent = this.value">
-                        <small>Nivel: <span id="sensitivityValue">7</span>/10</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label>🧠 Algoritmo de Predicción:</label>
-                        <select class="form-control" id="aiAlgorithm">
-                            <option value="balanced">⚖️ Balanceado (Recomendado)</option>
-                            <option value="aggressive">🔥 Agresivo</option>
-                            <option value="conservative">🛡️ Conservador</option>
-                        </select>
-                    </div>
+                <div class="form-group">
+                    <label>🧠 Algoritmo de Análisis:</label>
+                    <select class="form-control" id="aiAlgorithm">
+                        <option value="balanced">Balanceado</option>
+                        <option value="conservative">Conservador</option>
+                        <option value="aggressive">Agresivo</option>
+                    </select>
                 </div>
             </div>
 
             <div class="ml-recommendation">
-                <h4>💡 Estado del Sistema</h4>
-                <div>
-                    <p>🟢 <strong>Estado:</strong> Activo y funcionando</p>
-                    <p>📊 <strong>Modelos IA:</strong> Cargados</p>
-                    <p>🎯 <strong>Precisión:</strong> 94.7%</p>
-                    <p>⚡ <strong>Última actualización:</strong> Ahora</p>
+                <h4>💾 Datos del Sistema</h4>
+                <div id="systemStats">
+                    <p><strong>Registros cargados:</strong> <span id="configRegistros">0</span></p>
+                    <p><strong>Última carga:</strong> <span id="configUltimaCarga">Nunca</span></p>
+                    <p><strong>Configuración:</strong> <span id="configEstado">Pendiente</span></p>
                 </div>
             </div>
 
             <button class="upload-btn" onclick="guardarConfiguracion()">💾 Guardar Configuración</button>
+            <button class="upload-btn" onclick="limpiarDatos()" style="background: #e74c3c;">🗑️ Limpiar Datos</button>
         </div>
     </div>
 
-    <!-- Modal para detalles del cliente -->
+    <!-- Modal Cliente -->
     <div id="modalCliente" class="modal">
         <div class="modal-content">
             <span class="close" onclick="cerrarModal()">&times;</span>
-            <h2>🤖 Análisis Completo del Cliente</h2>
-            <div id="modalClienteContent"></div>
+            <h2>📋 Detalles del Cliente</h2>
+            <div id="modalContent"></div>
         </div>
     </div>
 
     <script>
-        // Variables globales
+        // Variables globales REALES
         let datosCartera = [];
+        let datosOriginales = [];
         let configuracion = {
             nombreCorrector: '',
             telefonoCorrector: '',
@@ -149,49 +48,51 @@ Saludos,
             aiAlgorithm: 'balanced'
         };
 
-        // Mapeo de aseguradoras
+        // Mapeo de aseguradoras por código
         const aseguradoras = {
             '0104': 'INS (Instituto Nacional de Seguros)',
             '0105': 'Mapfre Costa Rica',
             '0106': 'BCR Seguros',
-            '0107': 'Sagicor Costa Rica'
+            '0107': 'Sagicor Costa Rica',
+            '0108': 'Equinoccio Seguros',
+            '0109': 'Assa Compañía de Seguros'
         };
 
         // Inicialización
         document.addEventListener('DOMContentLoaded', function() {
             cargarConfiguracion();
             setupDragAndDrop();
-            mostrarNotificacion('🚀 Sistema de Cobros Inteligente PRO iniciado', 'success');
+            cargarDatosGuardados();
+            mostrarNotificacion('Sistema iniciado correctamente', 'success');
         });
 
         // Gestión de pestañas
         function showTab(tabName) {
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            
-            const navTabs = document.querySelectorAll('.nav-tab');
-            navTabs.forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
             
             document.getElementById(tabName).classList.add('active');
-            
-            const targetButton = document.querySelector(`button[onclick="showTab('${tabName}')"]`);
-            if (targetButton) {
-                targetButton.classList.add('active');
-            }
+            document.querySelector(`button[onclick="showTab('${tabName}')"]`).classList.add('active');
         }
 
-        // Procesamiento de archivos Excel
+        // CARGA REAL DE ARCHIVOS EXCEL
         function loadExcelFile(input) {
             const file = input.files[0];
             if (!file) return;
 
+            // Validaciones
             if (!file.name.match(/\.(xlsx|xls)$/i)) {
-                mostrarNotificacion('❌ Solo archivos Excel (.xlsx, .xls)', 'error');
+                mostrarNotificacion('Error: Solo se permiten archivos Excel (.xlsx, .xls)', 'error');
                 return;
             }
 
-            document.getElementById('fileName').textContent = file.name;
+            if (file.size > 10 * 1024 * 1024) { // 10MB máximo
+                mostrarNotificacion('Error: Archivo demasiado grande (máximo 10MB)', 'error');
+                return;
+            }
+
             mostrarProcesamientoUI();
+            document.getElementById('fileName').textContent = file.name;
 
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -199,20 +100,32 @@ Saludos,
                     const data = new Uint8Array(e.target.result);
                     const workbook = XLSX.read(data, {type: 'array'});
                     const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-                    const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+                    const jsonData = XLSX.utils.sheet_to_json(firstSheet, {header: 1});
                     
-                    procesarDatos(jsonData);
+                    procesarArchivoReal(jsonData, file.name);
                     
                 } catch (error) {
-                    mostrarNotificacion('❌ Error al procesar archivo: ' + error.message, 'error');
+                    mostrarNotificacion('Error al procesar archivo: ' + error.message, 'error');
                     resetearUploadUI();
                 }
             };
+            
+            reader.onerror = function() {
+                mostrarNotificacion('Error al leer el archivo', 'error');
+                resetearUploadUI();
+            };
+            
             reader.readAsArrayBuffer(file);
         }
 
-        function procesarDatos(data) {
-            // Simular procesamiento con barra de progreso
+        function procesarArchivoReal(data, fileName) {
+            if (!data || data.length < 2) {
+                mostrarNotificacion('El archivo está vacío o no tiene datos válidos', 'error');
+                resetearUploadUI();
+                return;
+            }
+
+            // Simular progreso
             let progress = 0;
             const progressBar = document.getElementById('progressFill');
             const statusText = document.getElementById('processingStatus');
@@ -222,225 +135,890 @@ Saludos,
                 if (progress > 100) progress = 100;
                 
                 progressBar.style.width = progress + '%';
-                statusText.textContent = 'Procesando datos con IA...';
+                statusText.textContent = progress < 50 ? 'Analizando estructura...' : 
+                                       progress < 80 ? 'Validando datos...' : 'Finalizando...';
                 
                 if (progress >= 100) {
                     clearInterval(interval);
-                    completarProcesamiento(data);
+                    completarProcesamientoReal(data, fileName);
                 }
             }, 200);
         }
 
-        function completarProcesamiento(data) {
-            // Convertir datos
-            datosCartera = data.map((row, index) => {
-                const poliza = Object.values(row)[1] || '';
+        function completarProcesamientoReal(data, fileName) {
+            try {
+                const headers = data[0];
+                const rows = data.slice(1);
+                
+                // Detectar columnas automáticamente
+                const columnMapping = detectarColumnas(headers);
+                mostrarMapeoColumnas(columnMapping, headers);
+                
+                // Convertir datos
+                datosOriginales = convertirDatosReales(rows, columnMapping, headers);
+                datosCartera = [...datosOriginales];
+                
+                // Calcular scores IA
+                calcularScoresIA();
+                
+                // Actualizar UI
+                document.getElementById('recordCount').textContent = datosCartera.length;
+                document.getElementById('processTime').textContent = new Date().toLocaleString();
+                document.getElementById('fileInfo').style.display = 'block';
+                
+                // Mostrar validación
+                mostrarValidacionDatos();
+                
+                // Habilitar procesamiento
+                const processBtn = document.getElementById('processBtn');
+                processBtn.disabled = false;
+                processBtn.style.opacity = '1';
+                processBtn.innerHTML = '🤖 Datos Listos - Procesar';
+                
+                resetearUploadUI();
+                guardarDatos();
+                
+                mostrarNotificacion(`Archivo procesado: ${datosCartera.length} registros cargados`, 'success');
+                
+            } catch (error) {
+                mostrarNotificacion('Error procesando datos: ' + error.message, 'error');
+                resetearUploadUI();
+            }
+        }
+
+        function detectarColumnas(headers) {
+            const mapping = {
+                cliente: null,
+                poliza: null,
+                monto: null,
+                vencimiento: null,
+                aseguradora: null,
+                telefono: null,
+                email: null,
+                formaPago: null
+            };
+            
+            headers.forEach((header, index) => {
+                const h = header.toString().toLowerCase();
+                
+                if (h.includes('asegurado') || h.includes('cliente') || h.includes('nombre')) {
+                    mapping.cliente = index;
+                } else if (h.includes('poliza') || h.includes('póliza') || h.includes('policy')) {
+                    mapping.poliza = index;
+                } else if (h.includes('monto') || h.includes('prima') || h.includes('valor')) {
+                    mapping.monto = index;
+                } else if (h.includes('vencimiento') || h.includes('vigencia') || h.includes('hasta')) {
+                    mapping.vencimiento = index;
+                } else if (h.includes('telefono') || h.includes('teléfono') || h.includes('cel')) {
+                    mapping.telefono = index;
+                } else if (h.includes('email') || h.includes('correo') || h.includes('mail')) {
+                    mapping.email = index;
+                } else if (h.includes('forma') && h.includes('pago')) {
+                    mapping.formaPago = index;
+                } else if (h.includes('aseguradora') || h.includes('compañía')) {
+                    mapping.aseguradora = index;
+                }
+            });
+            
+            return mapping;
+        }
+
+        function mostrarMapeoColumnas(mapping, headers) {
+            const grid = document.getElementById('mappingGrid');
+            grid.innerHTML = '';
+            
+            Object.entries(mapping).forEach(([campo, index]) => {
+                const div = document.createElement('div');
+                div.innerHTML = `<strong>${campo}:</strong> ${index !== null ? headers[index] : 'No detectado'}`;
+                if (index === null && ['cliente', 'poliza', 'monto'].includes(campo)) {
+                    div.style.color = '#e74c3c';
+                    div.innerHTML += ' ⚠️';
+                }
+                grid.appendChild(div);
+            });
+            
+            document.getElementById('columnMapping').style.display = 'block';
+        }
+
+        function convertirDatosReales(rows, mapping, headers) {
+            return rows.map((row, index) => {
+                const poliza = mapping.poliza !== null ? (row[mapping.poliza] || '').toString() : '';
                 const codigoAseg = poliza.substring(0, 4);
+                
+                // Limpiar y convertir monto
+                let monto = 0;
+                if (mapping.monto !== null && row[mapping.monto]) {
+                    const montoStr = row[mapping.monto].toString().replace(/[^\d.,]/g, '');
+                    monto = parseFloat(montoStr.replace(',', '.')) || 0;
+                }
                 
                 return {
                     id: index + 1,
-                    cliente: Object.values(row)[0] || 'Cliente ' + (index + 1),
+                    cliente: mapping.cliente !== null ? (row[mapping.cliente] || '').toString() : `Cliente ${index + 1}`,
                     poliza: poliza,
                     aseguradora: aseguradoras[codigoAseg] || 'Aseguradora Desconocida',
-                    monto: Math.floor(Math.random() * 500000) + 50000,
-                    vencimiento: new Date(Date.now() + Math.random() * 60 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                    estado: 'Pendiente',
-                    aiScore: Math.floor(Math.random() * 80) + 20,
-                    aiPrediction: Math.random() > 0.5 ? 'Pagará en plazo' : 'Requiere seguimiento',
-                    email: '',
-                    telefono: ''
+                    monto: monto,
+                    vencimiento: mapping.vencimiento !== null ? formatearFechaExcel(row[mapping.vencimiento]) : '',
+                    telefono: mapping.telefono !== null ? limpiarTelefono(row[mapping.telefono]) : '',
+                    email: mapping.email !== null ? (row[mapping.email] || '').toString() : '',
+                    formaPago: mapping.formaPago !== null ? (row[mapping.formaPago] || '').toString() : 'No especificado',
+                    estado: determinarEstado(row[mapping.vencimiento]),
+                    tipoSeguro: determinarTipoSeguro(poliza),
+                    aiScore: 0,
+                    aiPrediction: '',
+                    aiRecommendation: '',
+                    fechaCarga: new Date().toISOString()
                 };
-            });
-
-            // Actualizar UI
-            document.getElementById('recordCount').textContent = datosCartera.length;
-            document.getElementById('analysisTime').textContent = new Date().toLocaleString();
-            document.getElementById('fileInfo').style.display = 'block';
-            document.getElementById('backupInfo').style.display = 'block';
-            
-            const processBtn = document.getElementById('processBtn');
-            processBtn.disabled = false;
-            processBtn.style.opacity = '1';
-            processBtn.innerHTML = '🤖 Datos Listos - Procesar con IA';
-            
-            resetearUploadUI();
-            
-            mostrarNotificacion(`✅ ${datosCartera.length} registros procesados exitosamente`, 'success');
+            }).filter(cliente => cliente.cliente && cliente.poliza); // Solo registros válidos
         }
 
-        function processDataWithAI() {
+        function formatearFechaExcel(fecha) {
+            if (!fecha) return '';
+            
+            // Si es número de Excel (días desde 1900)
+            if (typeof fecha === 'number') {
+                const excelEpoch = new Date(1900, 0, 1);
+                const date = new Date(excelEpoch.getTime() + (fecha - 1) * 24 * 60 * 60 * 1000);
+                return date.toISOString().split('T')[0];
+            }
+            
+            // Si es string, intentar parsearlo
+            try {
+                const date = new Date(fecha);
+                return isNaN(date.getTime()) ? fecha.toString() : date.toISOString().split('T')[0];
+            } catch {
+                return fecha.toString();
+            }
+        }
+
+        function limpiarTelefono(tel) {
+            if (!tel) return '';
+            return tel.toString().replace(/\D/g, '');
+        }
+
+        function determinarEstado(vencimiento) {
+            if (!vencimiento) return 'Pendiente';
+            
+            try {
+                const fechaVenc = new Date(vencimiento);
+                const hoy = new Date();
+                return fechaVenc < hoy ? 'Vencido' : 'Pendiente';
+            } catch {
+                return 'Pendiente';
+            }
+        }
+
+        function determinarTipoSeguro(poliza) {
+            if (!poliza) return 'GENERAL';
+            
+            const codigo = poliza.substring(4, 7).toUpperCase();
+            const tipos = {
+                'AUT': 'AUTO',
+                'VID': 'VIDA',
+                'RCG': 'RCG',
+                'COM': 'COMERCIAL',
+                'HOG': 'HOGAR',
+                'SAL': 'SALUD'
+            };
+            
+            return tipos[codigo] || 'GENERAL';
+        }
+
+        function calcularScoresIA() {
+            const sensibilidad = parseInt(configuracion.aiSensitivity) || 7;
+            
+            datosCartera.forEach(cliente => {
+                let score = 50; // Base
+                
+                // Factor monto
+                if (cliente.monto < 50000) score += 20;
+                else if (cliente.monto < 100000) score += 10;
+                else if (cliente.monto > 500000) score -= 15;
+                
+                // Factor tipo seguro
+                const tipoFactors = {
+                    'AUTO': 15, 'HOGAR': 10, 'VIDA': 5, 'COMERCIAL': -5, 'RCG': 0
+                };
+                score += tipoFactors[cliente.tipoSeguro] || 0;
+                
+                // Factor vencimiento
+                if (cliente.vencimiento) {
+                    const diasVenc = calcularDiasVencimiento(cliente.vencimiento);
+                    if (diasVenc < 0) score -= 25;
+                    else if (diasVenc < 7) score -= 10;
+                    else if (diasVenc > 30) score += 10;
+                }
+                
+                // Factor comunicación
+                if (cliente.telefono && cliente.email) score += 10;
+                else if (cliente.telefono || cliente.email) score += 5;
+                
+                // Ajustar por sensibilidad
+                const adjustment = (sensibilidad - 5) * 3;
+                score += adjustment;
+                
+                // Normalizar
+                cliente.aiScore = Math.max(1, Math.min(99, Math.round(score)));
+                cliente.aiPrediction = generarPrediccionReal(cliente);
+                cliente.aiRecommendation = generarRecomendacionReal(cliente);
+            });
+        }
+
+        function calcularDiasVencimiento(vencimiento) {
+            try {
+                const fechaVenc = new Date(vencimiento);
+                const hoy = new Date();
+                const diferencia = fechaVenc.getTime() - hoy.getTime();
+                return Math.ceil(diferencia / (1000 * 3600 * 24));
+            } catch {
+                return 30;
+            }
+        }
+
+        function generarPrediccionReal(cliente) {
+            const score = cliente.aiScore;
+            const diasVenc = calcularDiasVencimiento(cliente.vencimiento);
+            
+            if (score >= 75) {
+                return diasVenc < 0 ? 'Pagará pronto' : 'Pagará a tiempo';
+            } else if (score >= 50) {
+                return diasVenc < 0 ? 'Seguimiento necesario' : 'Probable pago con recordatorio';
+            } else if (score >= 30) {
+                return 'Riesgo medio - requiere contacto';
+            } else {
+                return 'Alto riesgo - atención urgente';
+            }
+        }
+
+        function generarRecomendacionReal(cliente) {
+            const score = cliente.aiScore;
+            const tieneContacto = cliente.telefono || cliente.email;
+            
+            if (score >= 75) {
+                return tieneContacto ? 'Recordatorio suave' : 'Buscar datos de contacto';
+            } else if (score >= 50) {
+                return 'Contacto directo recomendado';
+            } else if (score >= 30) {
+                return 'Contacto urgente + facilidades';
+            } else {
+                return 'Atención prioritaria inmediata';
+            }
+        }
+
+        function mostrarValidacionDatos() {
+            const sinTelefono = datosCartera.filter(c => !c.telefono).length;
+            const sinEmail = datosCartera.filter(c => !c.email).length;
+            const vencidos = datosCartera.filter(c => c.estado === 'Vencido').length;
+            const sinMonto = datosCartera.filter(c => c.monto === 0).length;
+            
+            let html = '<div class="alert alert-info">';
+            html += `<strong>Validación completada:</strong><br>`;
+            html += `• Total registros: ${datosCartera.length}<br>`;
+            html += `• Sin teléfono: ${sinTelefono}<br>`;
+            html += `• Sin email: ${sinEmail}<br>`;
+            html += `• Vencidos: ${vencidos}<br>`;
+            html += `• Sin monto: ${sinMonto}`;
+            html += '</div>';
+            
+            if (vencidos > 0 || sinMonto > 0) {
+                html += '<div class="alert alert-warning">';
+                html += '<strong>Atención requerida:</strong><br>';
+                if (vencidos > 0) html += `• ${vencidos} clientes con pólizas vencidas<br>`;
+                if (sinMonto > 0) html += `• ${sinMonto} registros sin monto válido<br>`;
+                html += '</div>';
+            }
+            
+            document.getElementById('validationResults').innerHTML = html;
+            document.getElementById('dataValidation').style.display = 'block';
+        }
+
+        function processRealData() {
             if (datosCartera.length === 0) {
-                mostrarNotificacion('⚠️ No hay datos cargados', 'warning');
+                mostrarNotificacion('No hay datos para procesar', 'warning');
                 return;
             }
 
-            // Cambiar a pestaña de cartera
+            mostrarNotificacion('Procesando datos con IA...', 'info');
+            
+            // Recalcular con configuración actual
+            calcularScoresIA();
+            
+            // Ir a cartera
             showTab('cartera');
             
-            // Actualizar estadísticas
-            actualizarEstadisticas();
+            // Actualizar todo
+            actualizarDashboard();
             actualizarTablaCartera();
+            mostrarElementosCartera();
             
-            mostrarNotificacion('✅ Procesamiento IA completado', 'success');
+            mostrarNotificacion('Datos procesados exitosamente', 'success');
         }
 
-        function actualizarEstadisticas() {
+        function actualizarDashboard() {
             const total = datosCartera.length;
-            const montoPendiente = datosCartera.reduce((sum, c) => sum + c.monto, 0);
+            const montoPendiente = datosCartera.filter(c => c.estado !== 'Pagado').reduce((sum, c) => sum + c.monto, 0);
             const vencidos = datosCartera.filter(c => c.estado === 'Vencido').length;
             const scorePromedio = datosCartera.reduce((sum, c) => sum + c.aiScore, 0) / total;
-
+            
             document.getElementById('totalClientes').textContent = total;
             document.getElementById('montoPendiente').textContent = `₡${montoPendiente.toLocaleString()}`;
             document.getElementById('clientesVencidos').textContent = vencidos;
-            document.getElementById('efectividad').textContent = `${scorePromedio.toFixed(1)}%`;
-
-            document.getElementById('aiPredTotal').textContent = `🤖 ${Math.floor(total * 0.7)} clientes alta probabilidad`;
-            document.getElementById('aiPredMonto').textContent = `🤖 89% probabilidad ₡${Math.floor(montoPendiente * 0.8).toLocaleString()}`;
-            document.getElementById('aiPredVencidos').textContent = vencidos > 0 ? '🤖 Acción urgente requerida' : '🤖 Sin riesgos críticos';
-            document.getElementById('aiPredEfectividad').textContent = `🤖 Score promedio: ${scorePromedio.toFixed(1)}%`;
+            document.getElementById('scorePromedio').textContent = `${scorePromedio.toFixed(1)}%`;
+            
+            document.getElementById('clientesInfo').textContent = `${total} registros cargados`;
+            document.getElementById('montoInfo').textContent = `${Math.round((montoPendiente/datosCartera.reduce((s,c) => s + c.monto, 0))*100)}% pendiente`;
+            document.getElementById('vencidosInfo').textContent = vencidos > 0 ? 'Requiere atención' : 'Al día';
+            document.getElementById('scoreInfo').textContent = `Promedio ${scorePromedio.toFixed(1)}%`;
+            
+            // Resumen ejecutivo
+            document.getElementById('summaryStatus').textContent = `${total} clientes cargados`;
+            document.getElementById('nextAction').textContent = vencidos > 0 ? `Contactar ${vencidos} clientes vencidos` : 'Seguimiento regular';
+            document.getElementById('recommendation').textContent = scorePromedio < 50 ? 'Revisar estrategia de cobro' : 'Mantener seguimiento actual';
         }
 
         function actualizarTablaCartera() {
             const tbody = document.getElementById('tablaCarteraBody');
             tbody.innerHTML = '';
             
-            datosCartera.forEach(cliente => {
+            const datosAMostrar = datosCartera.slice(0, 100); // Máximo 100 para rendimiento
+            
+            datosAMostrar.forEach(cliente => {
                 const row = document.createElement('tr');
                 
-                let scoreColor = cliente.aiScore >= 70 ? '#27ae60' : 
-                                cliente.aiScore >= 40 ? '#f39c12' : '#e74c3c';
+                let scoreClass = 'priority-low';
+                if (cliente.aiScore < 40) scoreClass = 'priority-high';
+                else if (cliente.aiScore < 70) scoreClass = 'priority-medium';
+                
+                let diasVenc = calcularDiasVencimiento(cliente.vencimiento);
+                let fechaColor = diasVenc < 0 ? 'color: #e74c3c; font-weight: bold;' : 
+                               diasVenc < 7 ? 'color: #f39c12; font-weight: bold;' : 'color: #27ae60;';
                 
                 row.innerHTML = `
-                    <td><strong>${cliente.cliente}</strong></td>
+                    <td>
+                        <strong>${cliente.cliente}</strong><br>
+                        <small style="color: #666;">${cliente.aseguradora}</small>
+                        ${!cliente.telefono ? '<br><small style="color: #856404;">⚠️ Sin teléfono</small>' : ''}
+                        ${!cliente.email ? '<br><small style="color: #856404;">⚠️ Sin email</small>' : ''}
+                    </td>
                     <td style="text-align: center;">
-                        <div class="ai-score-circle priority-${cliente.aiScore >= 70 ? 'low' : cliente.aiScore >= 40 ? 'medium' : 'high'}">
+                        <div class="ai-score-circle ${scoreClass}">
                             ${cliente.aiScore}%
                         </div>
                     </td>
-                    <td>${cliente.poliza}<br><small>${cliente.aseguradora}</small></td>
-                    <td style="font-weight: bold;">₡${cliente.monto.toLocaleString()}</td>
-                    <td>${formatearFecha(cliente.vencimiento)}</td>
-                    <td><strong style="color: ${scoreColor};">${cliente.aiPrediction}</strong></td>
-                    <td><span class="status-badge status-${cliente.estado.toLowerCase()}">${cliente.estado}</span></td>
                     <td>
-                        <button class="action-btn btn-email" onclick="enviarEmail(${cliente.id})">📧</button>
-                        <button class="action-btn btn-whatsapp" onclick="abrirWhatsApp(${cliente.id})">💬</button>
-                        <button class="action-btn btn-paid" onclick="marcarPagado(${cliente.id})">✅</button>
+                        ${cliente.poliza}<br>
+                        <small style="color: #666;">${cliente.tipoSeguro}</small>
+                    </td>
+                    <td style="font-weight: bold;">
+                        ₡${cliente.monto.toLocaleString()}
+                    </td>
+                    <td style="${fechaColor}">
+                        ${cliente.vencimiento ? formatearFecha(cliente.vencimiento) : 'Sin fecha'}
+                        ${cliente.vencimiento ? `<br><small>${diasVenc < 0 ? `Vencido ${Math.abs(diasVenc)} días` : `${diasVenc} días restantes`}</small>` : ''}
+                    </td>
+                    <td>
+                        <span class="status-badge status-${cliente.estado.toLowerCase()}">${cliente.estado}</span>
+                    </td>
+                    <td>
+                        <button class="action-btn btn-email" onclick="enviarEmailCliente(${cliente.id})" 
+                                ${!cliente.email ? 'disabled title="Sin email"' : 'title="Enviar Email"'}>📧</button>
+                        <button class="action-btn btn-whatsapp" onclick="abrirWhatsAppCliente(${cliente.id})" 
+                                ${!cliente.telefono ? 'disabled title="Sin teléfono"' : 'title="WhatsApp"'}>💬</button>
+                        <button class="action-btn btn-paid" onclick="marcarComoPagado(${cliente.id})" title="Marcar Pagado">✅</button>
+                        <button class="action-btn" onclick="verDetallesCliente(${cliente.id})" 
+                                style="background: #3498db; color: white;" title="Ver Detalles">📋</button>
                     </td>
                 `;
                 tbody.appendChild(row);
             });
+            
+            if (datosCartera.length > 100) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td colspan="7" style="text-align: center; padding: 20px; background: #f8f9fa;">
+                        <strong>Mostrando los primeros 100 registros de ${datosCartera.length} total</strong><br>
+                        <small>Use los filtros para ver registros específicos</small>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            }
         }
 
-        // Funciones de acción
-        function enviarEmail(clienteId) {
-            const cliente = datosCartera.find(c => c.id === clienteId);
-            mostrarNotificacion(`📧 Email preparado para ${cliente.cliente}`, 'success');
+        function mostrarElementosCartera() {
+            document.getElementById('filterSection').style.display = 'block';
+            document.getElementById('exportBtn').style.display = 'inline-block';
+            document.getElementById('commBtn').style.display = 'inline-block';
+            document.getElementById('comunicacionTools').style.display = 'block';
+            document.getElementById('reportesTools').style.display = 'block';
         }
 
-        function abrirWhatsApp(clienteId) {
+        // Funciones de acción real
+        function enviarEmailCliente(clienteId) {
             const cliente = datosCartera.find(c => c.id === clienteId);
-            const mensaje = `Hola ${cliente.cliente}, su póliza ${cliente.poliza} por ₡${cliente.monto.toLocaleString()} vence el ${cliente.vencimiento}. Score IA: ${cliente.aiScore}%`;
-            const whatsappLink = `https://wa.me/506${cliente.telefono || '88887777'}?text=${encodeURIComponent(mensaje)}`;
-            window.open(whatsappLink, '_blank');
-            mostrarNotificacion(`💬 WhatsApp abierto para ${cliente.cliente}`, 'success');
-        }
-
-        function marcarPagado(clienteId) {
-            const cliente = datosCartera.find(c => c.id === clienteId);
-            cliente.estado = 'Pagado';
+            if (!cliente || !cliente.email) {
+                mostrarNotificacion('Cliente sin email válido', 'error');
+                return;
+            }
+            
+            const plantilla = document.getElementById('plantillaEmail').value;
+            const mensaje = personalizarMensaje(plantilla, cliente);
+            
+            const subject = `Recordatorio Póliza ${cliente.poliza}`;
+            const mailtoLink = `mailto:${cliente.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(mensaje)}`;
+            
+            window.open(mailtoLink);
+            
+            cliente.estado = cliente.estado === 'Pendiente' ? 'Contactado' : cliente.estado;
             actualizarTablaCartera();
-            actualizarEstadisticas();
-            mostrarNotificacion(`✅ ${cliente.cliente} marcado como PAGADO`, 'success');
+            guardarDatos();
+            
+            mostrarNotificacion(`Email preparado para ${cliente.cliente}`, 'success');
         }
 
-        // Funciones de reportes
-        function reporteEjecutivo() {
-            mostrarNotificacion('👔 Generando reporte ejecutivo...', 'info');
-            document.getElementById('reporteContainer').innerHTML = `
-                <div class="ai-insights">
-                    <h3>👔 Reporte Ejecutivo</h3>
-                    <div class="ai-card">
-                        <h4>💰 Resumen Financiero</h4>
-                        <p>Total cartera: ₡${datosCartera.reduce((s,c) => s + c.monto, 0).toLocaleString()}</p>
-                        <p>Clientes: ${datosCartera.length}</p>
-                        <p>Score promedio IA: ${(datosCartera.reduce((s,c) => s + c.aiScore, 0) / datosCartera.length).toFixed(1)}%</p>
+        function abrirWhatsAppCliente(clienteId) {
+            const cliente = datosCartera.find(c => c.id === clienteId);
+            if (!cliente || !cliente.telefono) {
+                mostrarNotificacion('Cliente sin teléfono válido', 'error');
+                return;
+            }
+            
+            const plantilla = document.getElementById('plantillaWhatsApp').value;
+            const mensaje = personalizarMensaje(plantilla, cliente);
+            
+            const telefono = cliente.telefono.startsWith('506') ? cliente.telefono : `506${cliente.telefono}`;
+            const whatsappLink = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+            
+            window.open(whatsappLink, '_blank');
+            
+            cliente.estado = cliente.estado === 'Pendiente' ? 'Contactado' : cliente.estado;
+            actualizarTablaCartera();
+            guardarDatos();
+            
+            mostrarNotificacion(`WhatsApp abierto para ${cliente.cliente}`, 'success');
+        }
+
+        function marcarComoPagado(clienteId) {
+            const cliente = datosCartera.find(c => c.id === clienteId);
+            if (!cliente) return;
+            
+            if (confirm(`¿Confirmar pago de ${cliente.cliente}?\nMonto: ₡${cliente.monto.toLocaleString()}`)) {
+                cliente.estado = 'Pagado';
+                cliente.aiScore = 100;
+                cliente.aiPrediction = 'Pago confirmado';
+                
+                actualizarTablaCartera();
+                actualizarDashboard();
+                guardarDatos();
+                
+                mostrarNotificacion(`✅ Pago confirmado: ${cliente.cliente}`, 'success');
+            }
+        }
+
+        function verDetallesCliente(clienteId) {
+            const cliente = datosCartera.find(c => c.id === clienteId);
+            if (!cliente) return;
+            
+            document.getElementById('modalContent').innerHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <h4>Información General</h4>
+                        <p><strong>Cliente:</strong> ${cliente.cliente}</p>
+                        <p><strong>Póliza:</strong> ${cliente.poliza}</p>
+                        <p><strong>Aseguradora:</strong> ${cliente.aseguradora}</p>
+                        <p><strong>Tipo:</strong> ${cliente.tipoSeguro}</p>
+                        <p><strong>Monto:</strong> ₡${cliente.monto.toLocaleString()}</p>
+                        <p><strong>Vencimiento:</strong> ${cliente.vencimiento}</p>
+                        <p><strong>Forma Pago:</strong> ${cliente.formaPago}</p>
+                    </div>
+                    <div>
+                        <h4>Contacto y Estado</h4>
+                        <p><strong>Teléfono:</strong> ${cliente.telefono || 'No disponible'}</p>
+                        <p><strong>Email:</strong> ${cliente.email || 'No disponible'}</p>
+                        <p><strong>Estado:</strong> ${cliente.estado}</p>
+                        <p><strong>Score IA:</strong> ${cliente.aiScore}%</p>
+                        <p><strong>Predicción:</strong> ${cliente.aiPrediction}</p>
+                        <p><strong>Recomendación:</strong> ${cliente.aiRecommendation}</p>
                     </div>
                 </div>
             `;
+            
+            document.getElementById('modalCliente').style.display = 'block';
         }
 
-        function analisisRentabilidad() {
-            mostrarNotificacion('💰 Analizando rentabilidad...', 'info');
-            document.getElementById('reporteContainer').innerHTML = `
-                <div class="ai-insights">
-                    <h3>💰 Análisis de Rentabilidad</h3>
-                    <div class="ai-card">
-                        <h4>🏢 Por Aseguradora</h4>
-                        <p>INS: ₡${Math.floor(Math.random() * 1000000).toLocaleString()} (ROI: +25%)</p>
-                        <p>Mapfre: ₡${Math.floor(Math.random() * 800000).toLocaleString()} (ROI: +18%)</p>
-                        <p>BCR: ₡${Math.floor(Math.random() * 600000).toLocaleString()} (ROI: +22%)</p>
-                    </div>
-                </div>
-            `;
+        function personalizarMensaje(plantilla, cliente) {
+            return plantilla
+                .replace(/{CLIENTE}/g, cliente.cliente)
+                .replace(/{POLIZA}/g, cliente.poliza)
+                .replace(/{ASEGURADORA}/g, cliente.aseguradora)
+                .replace(/{MONTO}/g, `₡${cliente.monto.toLocaleString()}`)
+                .replace(/{VENCIMIENTO}/g, formatearFecha(cliente.vencimiento))
+                .replace(/{CORREDOR}/g, configuracion.nombreCorrector || 'Su Corredor')
+                .replace(/{TELEFONO}/g, configuracion.telefonoCorrector || '');
         }
 
-        function prediccionFlujo() {
-            mostrarNotificacion('📈 Generando predicciones...', 'info');
-            document.getElementById('reporteContainer').innerHTML = `
-                <div class="ai-insights">
-                    <h3>📈 Predicción de Flujo</h3>
-                    <div class="ai-card">
-                        <h4>📅 Proyecciones</h4>
-                        <p>30 días: ₡${Math.floor(Math.random() * 500000).toLocaleString()} (92% confianza)</p>
-                        <p>60 días: ₡${Math.floor(Math.random() * 800000).toLocaleString()} (85% confianza)</p>
-                        <p>90 días: ₡${Math.floor(Math.random() * 1200000).toLocaleString()} (78% confianza)</p>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Funciones auxiliares
+        // Funciones de filtros
         function aplicarFiltros() {
-            // Implementar filtros
+            const estado = document.getElementById('filtroEstado').value;
+            const score = document.getElementById('filtroScore').value;
+            const busqueda = document.getElementById('busquedaTexto').value.toLowerCase();
+            
+            let datosFiltrados = [...datosOriginales];
+            
+            if (estado) {
+                datosFiltrados = datosFiltrados.filter(c => c.estado === estado);
+            }
+            
+            if (score) {
+                if (score === 'high') datosFiltrados = datosFiltrados.filter(c => c.aiScore > 70);
+                if (score === 'medium') datosFiltrados = datosFiltrados.filter(c => c.aiScore >= 40 && c.aiScore <= 70);
+                if (score === 'low') datosFiltrados = datosFiltrados.filter(c => c.aiScore < 40);
+            }
+            
+            if (busqueda) {
+                datosFiltrados = datosFiltrados.filter(c => 
+                    c.cliente.toLowerCase().includes(busqueda) ||
+                    c.poliza.toLowerCase().includes(busqueda) ||
+                    c.aseguradora.toLowerCase().includes(busqueda)
+                );
+            }
+            
+            datosCartera = datosFiltrados;
+            actualizarTablaCartera();
+            actualizarDashboard();
         }
 
-        function exportarExcel() {
-            mostrarNotificacion('📊 Exportando a Excel...', 'success');
+        // Funciones de comunicación masiva
+        function enviarEmailsMasivos() {
+            const clientesConEmail = datosCartera.filter(c => c.email && c.estado !== 'Pagado');
+            
+            if (clientesConEmail.length === 0) {
+                mostrarNotificacion('No hay clientes con email válido', 'warning');
+                return;
+            }
+            
+            if (confirm(`¿Enviar emails a ${clientesConEmail.length} clientes?`)) {
+                mostrarNotificacion(`Preparando ${clientesConEmail.length} emails...`, 'info');
+                
+                setTimeout(() => {
+                    clientesConEmail.slice(0, 10).forEach((cliente, index) => {
+                        setTimeout(() => {
+                            enviarEmailCliente(cliente.id);
+                        }, index * 1000);
+                    });
+                }, 1000);
+            }
         }
 
-        function backupDatos() {
-            mostrarNotificacion('💾 Backup generado exitosamente', 'success');
+        function enviarWhatsAppMasivo() {
+            const clientesConTelefono = datosCartera.filter(c => c.telefono && c.estado !== 'Pagado');
+            
+            if (clientesConTelefono.length === 0) {
+                mostrarNotificacion('No hay clientes con teléfono válido', 'warning');
+                return;
+            }
+            
+            if (confirm(`¿Abrir WhatsApp para ${Math.min(clientesConTelefono.length, 5)} clientes?`)) {
+                mostrarNotificacion(`Abriendo WhatsApp para ${Math.min(clientesConTelefono.length, 5)} clientes...`, 'info');
+                
+                clientesConTelefono.slice(0, 5).forEach((cliente, index) => {
+                    setTimeout(() => {
+                        abrirWhatsAppCliente(cliente.id);
+                    }, index * 2000);
+                });
+            }
         }
 
         function comunicacionMasiva() {
-            mostrarNotificacion('🚀 Iniciando comunicación masiva inteligente...', 'info');
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <span class="close" onclick="this.parentElement.parentElement.remove()">&times;</span>
+                    <h2>🚀 Comunicación Masiva</h2>
+                    <div style="margin: 20px 0;">
+                        <h4>Candidatos disponibles:</h4>
+                        <p>📧 Con email: ${datosCartera.filter(c => c.email && c.estado !== 'Pagado').length}</p>
+                        <p>📱 Con teléfono: ${datosCartera.filter(c => c.telefono && c.estado !== 'Pagado').length}</p>
+                        <p>⚠️ Vencidos: ${datosCartera.filter(c => c.estado === 'Vencido').length}</p>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <button class="upload-btn" onclick="enviarEmailsMasivos(); this.parentElement.parentElement.parentElement.remove();">
+                            📧 Envío Masivo Email
+                        </button>
+                        <button class="upload-btn" onclick="enviarWhatsAppMasivo(); this.parentElement.parentElement.parentElement.remove();" style="background: #25d366;">
+                            💬 Envío Masivo WhatsApp
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // Funciones de reportes
+        function generarReporteCartera() {
+            const total = datosCartera.length;
+            const montTotal = datosCartera.reduce((s, c) => s + c.monto, 0);
+            const pendientes = datosCartera.filter(c => c.estado !== 'Pagado');
+            const vencidos = datosCartera.filter(c => c.estado === 'Vencido');
+            
+            document.getElementById('reporteResultados').innerHTML = `
+                <div class="ai-insights">
+                    <h3>📋 Reporte de Cartera</h3>
+                    <div class="ai-card">
+                        <h4>📊 Resumen General</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                            <div><strong>Total clientes:</strong> ${total}</div>
+                            <div><strong>Monto total:</strong> ₡${montTotal.toLocaleString()}</div>
+                            <div><strong>Pendientes:</strong> ${pendientes.length}</div>
+                            <div><strong>Vencidos:</strong> ${vencidos.length}</div>
+                            <div><strong>Score promedio:</strong> ${(datosCartera.reduce((s,c) => s + c.aiScore, 0) / total).toFixed(1)}%</div>
+                            <div><strong>Con contacto:</strong> ${datosCartera.filter(c => c.telefono || c.email).length}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generarReporteVencimientos() {
+            const vencidos = datosCartera.filter(c => c.estado === 'Vencido');
+            const proximosVencer = datosCartera.filter(c => {
+                const dias = calcularDiasVencimiento(c.vencimiento);
+                return dias >= 0 && dias <= 7;
+            });
+            
+            document.getElementById('reporteResultados').innerHTML = `
+                <div class="ai-insights">
+                    <h3>⚠️ Reporte de Vencimientos</h3>
+                    <div class="ai-card">
+                        <h4>🔴 Atención Urgente</h4>
+                        <p><strong>Vencidos:</strong> ${vencidos.length} clientes</p>
+                        <p><strong>Monto vencido:</strong> ₡${vencidos.reduce((s,c) => s + c.monto, 0).toLocaleString()}</p>
+                        <p><strong>Próximos a vencer (7 días):</strong> ${proximosVencer.length} clientes</p>
+                        <p><strong>Monto próximo:</strong> ₡${proximosVencer.reduce((s,c) => s + c.monto, 0).toLocaleString()}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generarReporteAseguradoras() {
+            const porAseguradora = {};
+            datosCartera.forEach(c => {
+                if (!porAseguradora[c.aseguradora]) {
+                    porAseguradora[c.aseguradora] = { count: 0, monto: 0, scores: [] };
+                }
+                porAseguradora[c.aseguradora].count++;
+                porAseguradora[c.aseguradora].monto += c.monto;
+                porAseguradora[c.aseguradora].scores.push(c.aiScore);
+            });
+            
+            let html = `
+                <div class="ai-insights">
+                    <h3>🏢 Reporte por Aseguradora</h3>
+                    <div class="ai-card">
+                        <h4>📊 Distribución por Compañía</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+            `;
+            
+            Object.entries(porAseguradora).forEach(([nombre, data]) => {
+                const scorePromedio = data.scores.reduce((s, score) => s + score, 0) / data.scores.length;
+                html += `
+                    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                        <h5>${nombre}</h5>
+                        <p><strong>Clientes:</strong> ${data.count}</p>
+                        <p><strong>Monto:</strong> ₡${data.monto.toLocaleString()}</p>
+                        <p><strong>Score promedio:</strong> ${scorePromedio.toFixed(1)}%</p>
+                    </div>
+                `;
+            });
+            
+            html += '</div></div></div>';
+            document.getElementById('reporteResultados').innerHTML = html;
+        }
+
+        // Funciones de exportación
+        function exportarExcel() {
+            if (datosCartera.length === 0) {
+                mostrarNotificacion('No hay datos para exportar', 'warning');
+                return;
+            }
+            
+            try {
+                const datosExport = datosCartera.map(c => ({
+                    'Cliente': c.cliente,
+                    'Póliza': c.poliza,
+                    'Aseguradora': c.aseguradora,
+                    'Tipo Seguro': c.tipoSeguro,
+                    'Monto': c.monto,
+                    'Vencimiento': c.vencimiento,
+                    'Estado': c.estado,
+                    'Teléfono': c.telefono,
+                    'Email': c.email,
+                    'Forma Pago': c.formaPago,
+                    'Score IA': c.aiScore,
+                    'Predicción IA': c.aiPrediction,
+                    'Recomendación IA': c.aiRecommendation,
+                    'Fecha Carga': c.fechaCarga
+                }));
+                
+                const ws = XLSX.utils.json_to_sheet(datosExport);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, 'Cartera');
+                
+                const fileName = `cartera_${new Date().toISOString().split('T')[0]}.xlsx`;
+                XLSX.writeFile(wb, fileName);
+                
+                mostrarNotificacion(`Excel exportado: ${fileName}`, 'success');
+                
+            } catch (error) {
+                mostrarNotificacion('Error al exportar: ' + error.message, 'error');
+            }
+        }
+
+        // Funciones de configuración
+        function cargarConfiguracion() {
+            const stored = localStorage.getItem('sistemaCobroConfigReal');
+            if (stored) {
+                try {
+                    configuracion = { ...configuracion, ...JSON.parse(stored) };
+                    
+                    document.getElementById('nombreCorrector').value = configuracion.nombreCorrector || '';
+                    document.getElementById('telefonoCorrector').value = configuracion.telefonoCorrector || '';
+                    document.getElementById('emailCorrector').value = configuracion.emailCorrector || '';
+                    document.getElementById('aiSensitivity').value = configuracion.aiSensitivity || 7;
+                    document.getElementById('aiAlgorithm').value = configuracion.aiAlgorithm || 'balanced';
+                    document.getElementById('sensitivityValue').textContent = configuracion.aiSensitivity || 7;
+                } catch (error) {
+                    console.warn('Error cargando configuración:', error);
+                }
+            }
         }
 
         function guardarConfiguracion() {
-            configuracion = {
-                nombreCorrector: document.getElementById('nombreCorrector').value,
-                telefonoCorrector: document.getElementById('telefonoCorrector').value,
-                emailCorrector: document.getElementById('emailCorrector').value,
-                aiSensitivity: document.getElementById('aiSensitivity').value,
-                aiAlgorithm: document.getElementById('aiAlgorithm').value
-            };
-            
-            localStorage.setItem('sistemaCobroConfig', JSON.stringify(configuracion));
-            mostrarNotificacion('💾 Configuración guardada', 'success');
+            try {
+                configuracion = {
+                    nombreCorrector: document.getElementById('nombreCorrector').value,
+                    telefonoCorrector: document.getElementById('telefonoCorrector').value,
+                    emailCorrector: document.getElementById('emailCorrector').value,
+                    aiSensitivity: parseInt(document.getElementById('aiSensitivity').value),
+                    aiAlgorithm: document.getElementById('aiAlgorithm').value
+                };
+                
+                localStorage.setItem('sistemaCobroConfigReal', JSON.stringify(configuracion));
+                
+                // Recalcular scores si hay datos
+                if (datosCartera.length > 0) {
+                    calcularScoresIA();
+                    actualizarTablaCartera();
+                    actualizarDashboard();
+                    guardarDatos();
+                }
+                
+                actualizarConfigStats();
+                mostrarNotificacion('Configuración guardada exitosamente', 'success');
+                
+            } catch (error) {
+                mostrarNotificacion('Error al guardar configuración: ' + error.message, 'error');
+            }
         }
 
-        function cargarConfiguracion() {
-            const stored = localStorage.getItem('sistemaCobroConfig');
-            if (stored) {
-                configuracion = JSON.parse(stored);
-                document.getElementById('nombreCorrector').value = configuracion.nombreCorrector || '';
-                document.getElementById('telefonoCorrector').value = configuracion.telefonoCorrector || '';
-                document.getElementById('emailCorrector').value = configuracion.emailCorrector || '';
-                document.getElementById('aiSensitivity').value = configuracion.aiSensitivity || 7;
-                document.getElementById('aiAlgorithm').value = configuracion.aiAlgorithm || 'balanced';
-                document.getElementById('sensitivityValue').textContent = configuracion.aiSensitivity || 7;
+        function actualizarConfigStats() {
+            document.getElementById('configRegistros').textContent = datosCartera.length;
+            document.getElementById('configUltimaCarga').textContent = datosCartera.length > 0 ? 
+                new Date(datosCartera[0].fechaCarga).toLocaleString() : 'Nunca';
+            document.getElementById('configEstado').textContent = configuracion.nombreCorrector ? 'Configurado' : 'Pendiente';
+        }
+
+        function limpiarDatos() {
+            if (confirm('¿Está seguro de eliminar todos los datos?\nEsta acción no se puede deshacer.')) {
+                datosCartera = [];
+                datosOriginales = [];
+                localStorage.removeItem('sistemaCobroDatosReal');
+                
+                // Resetear UI
+                document.getElementById('tablaCarteraBody').innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 40px; color: #666;">
+                            📁 Carga tu archivo Excel para ver los datos aquí
+                        </td>
+                    </tr>
+                `;
+                
+                document.getElementById('totalClientes').textContent = '0';
+                document.getElementById('montoPendiente').textContent = '₡0';
+                document.getElementById('clientesVencidos').textContent = '0';
+                document.getElementById('scorePromedio').textContent = '0%';
+                
+                document.getElementById('filterSection').style.display = 'none';
+                document.getElementById('exportBtn').style.display = 'none';
+                document.getElementById('commBtn').style.display = 'none';
+                document.getElementById('comunicacionTools').style.display = 'none';
+                document.getElementById('reportesTools').style.display = 'none';
+                
+                document.getElementById('fileInfo').style.display = 'none';
+                document.getElementById('columnMapping').style.display = 'none';
+                document.getElementById('dataValidation').style.display = 'none';
+                
+                const processBtn = document.getElementById('processBtn');
+                processBtn.disabled = true;
+                processBtn.style.opacity = '0.5';
+                processBtn.innerHTML = '🤖 Procesar Datos con IA';
+                
+                actualizarConfigStats();
+                showTab('carga');
+                
+                mostrarNotificacion('Datos eliminados correctamente', 'success');
+            }
+        }
+
+        // Funciones de persistencia
+        function guardarDatos() {
+            try {
+                const datosParaGuardar = {
+                    cartera: datosCartera,
+                    originales: datosOriginales,
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem('sistemaCobroDatosReal', JSON.stringify(datosParaGuardar));
+            } catch (error) {
+                console.warn('Error guardando datos:', error);
+            }
+        }
+
+        function cargarDatosGuardados() {
+            try {
+                const stored = localStorage.getItem('sistemaCobroDatosReal');
+                if (stored) {
+                    const data = JSON.parse(stored);
+                    if (data.cartera && Array.isArray(data.cartera) && data.cartera.length > 0) {
+                        datosCartera = data.cartera;
+                        datosOriginales = data.originales || data.cartera;
+                        
+                        actualizarDashboard();
+                        actualizarTablaCartera();
+                        mostrarElementosCartera();
+                        
+                        const processBtn = document.getElementById('processBtn');
+                        processBtn.disabled = false;
+                        processBtn.style.opacity = '1';
+                        processBtn.innerHTML = '🤖 Datos Cargados - Reprocesar';
+                        
+                        actualizarConfigStats();
+                        mostrarNotificacion('Datos anteriores cargados automáticamente', 'info');
+                    }
+                }
+            } catch (error) {
+                console.warn('Error cargando datos guardados:', error);
+            }
+        }
+
+        // Funciones utilitarias
+        function formatearFecha(fecha) {
+            if (!fecha) return '';
+            try {
+                return new Date(fecha).toLocaleDateString('es-CR');
+            } catch {
+                return fecha;
             }
         }
 
@@ -448,18 +1026,17 @@ Saludos,
             document.getElementById('modalCliente').style.display = 'none';
         }
 
-        function formatearFecha(fecha) {
-            return new Date(fecha).toLocaleDateString('es-CR');
-        }
-
         function mostrarProcesamientoUI() {
             document.getElementById('uploadContent').style.display = 'none';
             document.getElementById('processingContent').style.display = 'block';
+            document.getElementById('uploadArea').classList.add('processing');
         }
 
         function resetearUploadUI() {
             document.getElementById('uploadContent').style.display = 'block';
             document.getElementById('processingContent').style.display = 'none';
+            document.getElementById('uploadArea').classList.remove('processing', 'dragover');
+            document.getElementById('progressFill').style.width = '0%';
         }
 
         function setupDragAndDrop() {
@@ -504,13 +1081,13 @@ Saludos,
                 right: 20px;
                 z-index: 10000;
                 max-width: 400px;
-                animation: slideInRight 0.3s ease;
+                animation: slideIn 0.3s ease;
                 box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             `;
             
             notification.innerHTML = `
                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                    <div style="flex: 1;">${mensaje.replace(/\n/g, '<br>')}</div>
+                    <div style="flex: 1;">${mensaje}</div>
                     <button onclick="this.parentElement.parentElement.remove()" 
                             style="background: none; border: none; font-size: 18px; cursor: pointer; margin-left: 10px;">×</button>
                 </div>
@@ -520,14 +1097,14 @@ Saludos,
             
             setTimeout(() => {
                 if (notification.parentNode) {
-                    notification.style.animation = 'slideOutRight 0.3s ease';
+                    notification.style.animation = 'slideOut 0.3s ease';
                     setTimeout(() => {
                         if (notification.parentNode) {
                             notification.parentNode.removeChild(notification);
                         }
                     }, 300);
                 }
-            }, 4000);
+            }, 5000);
         }
 
         // Cerrar modales al hacer clic fuera
@@ -537,6 +1114,865 @@ Saludos,
                 modal.style.display = 'none';
             }
         }
+
+        // Agregar estilos para animaciones
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
-</html>
+</html><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Cobros Inteligente PRO - Costa Rica</title>
+    <meta name="description" content="Sistema profesional de cobros con IA para corredores de seguros">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>💼</text></svg>">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .pro-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+        }
+
+        .nav-tab:hover {
+            background: #e9ecef;
+        }
+
+        .nav-tab.active {
+            background: white;
+            color: #3498db;
+            border-bottom-color: #3498db;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .upload-area {
+            border: 3px dashed #3498db;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: #2980b9;
+            background: #f8f9fa;
+        }
+
+        .upload-area.dragover {
+            border-color: #27ae60;
+            background: #d5f4e6;
+        }
+
+        .upload-area.processing {
+            border-color: #f39c12;
+            background: #fef9e7;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .upload-btn {
+            background: #3498db;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .upload-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .upload-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .data-table th {
+            background: #34495e;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 500;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .data-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-pendiente {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-contactado {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-pagado {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-vencido {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            margin: 2px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-email {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-whatsapp {
+            background: #25d366;
+            color: white;
+        }
+
+        .btn-paid {
+            background: #27ae60;
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            border-left: 5px solid #3498db;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, #2ecc71, #f39c12, #e74c3c);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .ai-prediction {
+            font-size: 12px;
+            color: #e74c3c;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .filter-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .export-btn {
+            background: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .export-btn:hover {
+            background: #219a52;
+            transform: translateY(-1px);
+        }
+
+        .alert {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #b8daff;
+        }
+
+        .datos-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #3498db;
+        }
+
+        .datos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 10px;
+        }
+
+        .ai-insights {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .ai-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px 0;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .ml-recommendation {
+            background: linear-gradient(135deg, #e8f5e8, #f3e5f5);
+            border-left: 5px solid #4CAF50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .ai-score-circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            margin: 0 auto;
+        }
+
+        .priority-high {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            box-shadow: 0 0 10px rgba(231, 76, 60, 0.3);
+        }
+
+        .priority-medium {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            box-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
+        }
+
+        .priority-low {
+            background: linear-gradient(135deg, #27ae60, #229954);
+            box-shadow: 0 0 10px rgba(39, 174, 96, 0.3);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            max-height: 600px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .nav-tab {
+                flex: none;
+                min-width: 120px;
+                font-size: 12px;
+                padding: 12px 15px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .stat-number {
+                font-size: 1.8em;
+            }
+
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="pro-badge">🚀 PRODUCCIÓN</div>
+            <h1>💼 Sistema de Cobros Inteligente</h1>
+            <p>Sistema Profesional para Corredores de Seguros - Costa Rica</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('carga')">📥 Cargar Datos</button>
+            <button class="nav-tab" onclick="showTab('cartera')">📋 Gestión Cartera</button>
+            <button class="nav-tab" onclick="showTab('comunicacion')">📧 Comunicación</button>
+            <button class="nav-tab" onclick="showTab('reportes')">📊 Reportes</button>
+            <button class="nav-tab" onclick="showTab('configuracion')">⚙️ Configuración</button>
+        </div>
+
+        <!-- Tab Carga de Datos -->
+        <div id="carga" class="tab-content active">
+            <h2>📥 Carga de Datos Excel</h2>
+            
+            <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                <div id="uploadContent">
+                    <h3>📁 Sube tu archivo Excel de cartera</h3>
+                    <p>Formatos soportados: .xlsx, .xls</p>
+                    <p>El sistema detectará automáticamente las columnas</p>
+                    <button type="button" class="upload-btn">Seleccionar Archivo Excel</button>
+                    <input type="file" id="fileInput" class="file-input" accept=".xlsx,.xls" onchange="loadExcelFile(this)">
+                </div>
+                <div id="processingContent" style="display: none;">
+                    <div class="loading"></div>
+                    <h3>🤖 Procesando archivo...</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p id="processingStatus">Analizando datos...</p>
+                </div>
+            </div>
+
+            <div id="fileInfo" style="display: none;">
+                <div class="alert alert-success">
+                    <strong>📊 Archivo procesado:</strong> <span id="fileName"></span><br>
+                    <strong>📈 Registros encontrados:</strong> <span id="recordCount">0</span><br>
+                    <strong>🕒 Procesado:</strong> <span id="processTime"></span>
+                </div>
+            </div>
+
+            <div id="columnMapping" style="display: none;">
+                <h3>🔗 Mapeo de Columnas</h3>
+                <p>Revisa que las columnas estén correctamente asignadas:</p>
+                <div class="datos-info">
+                    <div class="datos-grid" id="mappingGrid">
+                        <!-- Se llenará dinámicamente -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="dataValidation" style="display: none;">
+                <h3>✅ Validación de Datos</h3>
+                <div id="validationResults"></div>
+            </div>
+
+            <button onclick="processRealData()" class="upload-btn" id="processBtn" style="opacity: 0.5;" disabled>
+                🤖 Procesar Datos con IA
+            </button>
+        </div>
+
+        <!-- Tab Cartera -->
+        <div id="cartera" class="tab-content">
+            <h2>📋 Gestión de Cartera</h2>
+            
+            <div class="ai-insights">
+                <h3>📊 Resumen Ejecutivo</h3>
+                <div class="ai-card">
+                    <div id="executiveSummary">
+                        <p>📂 <strong>Estado:</strong> <span id="summaryStatus">Sin datos cargados</span></p>
+                        <p>🎯 <strong>Siguiente acción:</strong> <span id="nextAction">Cargar archivo Excel</span></p>
+                        <p>⚡ <strong>Recomendación:</strong> <span id="recommendation">Subir datos para análisis</span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalClientes">0</div>
+                    <div class="stat-label">Total Clientes</div>
+                    <div class="ai-prediction" id="clientesInfo">Sin datos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="montoPendiente">₡0</div>
+                    <div class="stat-label">Monto Pendiente</div>
+                    <div class="ai-prediction" id="montoInfo">Sin datos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="clientesVencidos">0</div>
+                    <div class="stat-label">Vencidos</div>
+                    <div class="ai-prediction" id="vencidosInfo">Sin datos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="scorePromedio">0%</div>
+                    <div class="stat-label">Score Promedio</div>
+                    <div class="ai-prediction" id="scoreInfo">Sin datos</div>
+                </div>
+            </div>
+
+            <div class="filter-section" id="filterSection" style="display: none;">
+                <h3>🎯 Filtros</h3>
+                <div class="filter-grid">
+                    <div class="form-group">
+                        <label>Estado:</label>
+                        <select class="form-control" id="filtroEstado" onchange="aplicarFiltros()">
+                            <option value="">Todos</option>
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Contactado">Contactado</option>
+                            <option value="Pagado">Pagado</option>
+                            <option value="Vencido">Vencido</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Score IA:</label>
+                        <select class="form-control" id="filtroScore" onchange="aplicarFiltros()">
+                            <option value="">Todos</option>
+                            <option value="high">Alto (>70%)</option>
+                            <option value="medium">Medio (40-70%)</option>
+                            <option value="low">Bajo (<40%)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Búsqueda:</label>
+                        <input type="text" class="form-control" id="busquedaTexto" placeholder="Buscar cliente..." onkeyup="aplicarFiltros()">
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: right; margin-bottom: 15px;">
+                <button class="export-btn" onclick="exportarExcel()" id="exportBtn" style="display: none;">📊 Exportar Excel</button>
+                <button class="export-btn" onclick="comunicacionMasiva()" id="commBtn" style="display: none; background: #e74c3c;">🚀 Comunicación Masiva</button>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Score IA</th>
+                            <th>Póliza</th>
+                            <th>Monto</th>
+                            <th>Vencimiento</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaCarteraBody">
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: 40px; color: #666;">
+                                📁 Carga tu archivo Excel para ver los datos aquí
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab Comunicación -->
+        <div id="comunicacion" class="tab-content">
+            <h2>📧 Centro de Comunicación</h2>
+            
+            <div class="form-group">
+                <h3>📝 Plantillas de Mensajes</h3>
+                
+                <div class="form-group">
+                    <label>📧 Plantilla Email:</label>
+                    <textarea class="form-control" id="plantillaEmail" rows="10">Estimado/a {CLIENTE},
+
+Le escribo en relación a su póliza {POLIZA} por un monto de {MONTO}.
+
+Detalles:
+• Aseguradora: {ASEGURADORA}
+• Vencimiento: {VENCIMIENTO}
+• Estado: Pendiente de pago
+
+Para mantener su cobertura activa, es importante realizar el pago antes de la fecha de vencimiento.
+
+Si ya realizó el pago, por favor ignore este mensaje.
+Si necesita facilidades de pago, no dude en contactarnos.
+
+Cordialmente,
+{CORREDOR}
+Tel: {TELEFONO}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>💬 Plantilla WhatsApp:</label>
+                    <textarea class="form-control" id="plantillaWhatsApp" rows="8">Hola {CLIENTE}!
+
+Su póliza {POLIZA} vence el {VENCIMIENTO}.
+Monto: {MONTO}
+
+Para mantener su cobertura, puede pagar:
+• SINPE Móvil: {TELEFONO}
+• Transferencia bancaria
+• Efectivo en oficina
+
+¿Ya pagó? Responda "PAGUÉ"
+¿Necesita ayuda? Responda "AYUDA"
+
+Saludos,
+{CORREDOR}</textarea>
+                </div>
+            </div>
+
+            <div id="comunicacionTools" style="display: none;">
+                <h3>🚀 Herramientas de Comunicación</h3>
+                <button class="upload-btn" onclick="enviarEmailsMasivos()">📧 Envío Masivo Email</button>
+                <button class="upload-btn" onclick="enviarWhatsAppMasivo()" style="background: #25d366;">💬 Envío Masivo WhatsApp</button>
+            </div>
+        </div>
+
+        <!-- Tab Reportes -->
+        <div id="reportes" class="tab-content">
+            <h2>📊 Reportes y Análisis</h2>
+            
+            <div id="reportesTools" style="display: none;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                    <button class="upload-btn" onclick="generarReporteCartera()" style="background: #2c3e50; padding: 20px;">
+                        <div>📋 Reporte de Cartera</div>
+                        <small>Estado actual completo</small>
+                    </button>
+                    
+                    <button class="upload-btn" onclick="generarReporteVencimientos()" style="background: #e74c3c; padding: 20px;">
+                        <div>⚠️ Reporte Vencimientos</div>
+                        <small>Clientes por vencer</small>
+                    </button>
+                    
+                    <button class="upload-btn" onclick="generarReporteAseguradoras()" style="background: #27ae60; padding: 20px;">
+                        <div>🏢 Por Aseguradora</div>
+                        <small>Análisis por compañía</small>
+                    </button>
+                </div>
+            </div>
+
+            <div id="reporteResultados">
+                <div style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 10px;">
+                    <h3 style="color: #666;">📊 Área de Reportes</h3>
+                    <p style="color: #666;">Carga datos para generar reportes detallados</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Configuración -->
+        <div id="configuracion" class="tab-content">
+            <h2>⚙️ Configuración del Sistema</h2>
+            
+            <div class="form-group">
+                <h3>👤 Información del Corredor</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <div>
+                        <label>Nombre Completo:</label>
+                        <input type="text" class="form-control" id="nombreCorrector" placeholder="Su nombre completo">
+                    </div>
+                    <div>
+                        <label>Teléfono:</label>
+                        <input type="text" class="form-control" id="telefonoCorrector" placeholder="8888-7777">
+                    </div>
+                    <div>
+                        <label>Email:</label>
+                        <input type="email" class="form-control" id="emailCorrector" placeholder="corredor@ejemplo.com">
+                    </div>
+                </div>
+            </div>
+
+            <div class="ai-insights">
+                <h3>🤖 Configuración IA</h3>
+                <div class="form-group">
+                    <label>🎯 Sensibilidad del Score (1-10):</label>
+                    <input type="range" class="form-control" id="aiSensitivity" min="
