@@ -971,6 +971,86 @@
             }
         }
 
+        // Funciones para descargar plantillas integradas
+        function descargarPlantillaVacia() {
+            const datos = [
+                ['Asegurado', '# Póliza', 'Aseguradora', 'Monto', 'Vencimiento', 'Teléfono', 'Email', 'Forma de Pago'],
+                ['', '', '', '', '', '', '', ''],
+                ['', '', '', '', '', '', '', ''],
+                ['', '', '', '', '', '', '', ''],
+                ['', '', '', '', '', '', '', ''],
+                ['', '', '', '', '', '', '', '']
+            ];
+            
+            crearYDescargarExcel(datos, 'Plantilla_Cartera_Vacia.xlsx');
+            mostrarNotificacion('📋 Plantilla vacía descargada. Llénala con tus datos y súbela aquí.', 'success');
+        }
+
+        function descargarEjemploCompleto() {
+            const datos = [
+                ['Asegurado', '# Póliza', 'Aseguradora', 'Monto', 'Vencimiento', 'Teléfono', 'Email', 'Forma de Pago'],
+                ['MARÍA GONZÁLEZ CASTRO', '0104AUT0261819-00', 'INS', 45000, '2024-12-15', '88887777', 'maria.gonzalez@email.com', 'Mensual'],
+                ['CARLOS RAMÍREZ SOTO', '0104RCG0000138-08', 'INS', 125000, '2024-12-08', '87776666', '', 'Trimestral'],
+                ['EMPRESA LOGÍSTICA CR SA', '0104COM0445567-01', 'INS', 890000, '2024-12-20', '22334455', 'administracion@logistica.cr', 'Anual'],
+                ['ANA PATRICIA VEGA MORA', '0105VID0312456-02', 'Mapfre', 75000, '2025-01-10', '89991234', 'ana.vega@email.com', 'Mensual'],
+                ['COMERCIAL PÉREZ HERMANOS', '0106HOG0789123-01', 'BCR Seguros', 230000, '2024-11-30', '25551234', 'info@perezhermanos.cr', 'Semestral'],
+                ['JOSÉ FERNANDO MORALES', '0104AUT0123789-00', 'INS', 55000, '2025-02-28', '88123456', 'jose.morales@email.com', 'Mensual'],
+                ['DISTRIBUIDORA CENTRAL SA', '0105COM0567890-03', 'Mapfre', 450000, '2024-12-31', '22667788', 'ventas@distribuidora.cr', 'Anual'],
+                ['LAURA JIMÉNEZ VARGAS', '0106VID0234567-01', 'BCR Seguros', 95000, '2025-01-15', '89887766', 'laura.jimenez@gmail.com', 'Mensual'],
+                ['TALLER AUTOMOTRIZ EL SOL', '0104COM0678901-02', 'INS', 320000, '2024-11-25', '25889900', 'info@talleelsol.cr', 'Semestral'],
+                ['ROBERTO CHACÓN NÚÑEZ', '0105AUT0345678-00', 'Mapfre', 65000, '2025-03-10', '88776655', '', 'Mensual']
+            ];
+            
+            crearYDescargarExcel(datos, 'Ejemplo_Cartera_Completo.xlsx');
+            mostrarNotificacion('📊 Ejemplo descargado con 10 clientes. Puedes usarlo para pruebas o modificar los datos.', 'success');
+        }
+
+        function descargarPlantillaINS() {
+            const datos = [
+                ['Asegurado', '# Póliza', 'Aseguradora', 'Monto', 'Vencimiento', 'Teléfono', 'Email', 'Forma de Pago'],
+                ['CLIENTE EJEMPLO 1', '0104AUT0000001-00', 'INS', 50000, '2024-12-31', '88887777', 'cliente1@email.com', 'Mensual'],
+                ['CLIENTE EJEMPLO 2', '0104RCG0000002-00', 'INS', 120000, '2025-01-15', '87776666', 'cliente2@email.com', 'Trimestral'],
+                ['CLIENTE EJEMPLO 3', '0104COM0000003-00', 'INS', 300000, '2024-11-30', '86665555', 'cliente3@email.com', 'Semestral'],
+                ['CLIENTE EJEMPLO 4', '0104HOG0000004-00', 'INS', 85000, '2025-02-28', '85554444', 'cliente4@email.com', 'Mensual'],
+                ['CLIENTE EJEMPLO 5', '0104VID0000005-00', 'INS', 95000, '2025-01-20', '84443333', 'cliente5@email.com', 'Mensual']
+            ];
+            
+            crearYDescargarExcel(datos, 'Plantilla_Solo_INS.xlsx');
+            mostrarNotificacion('🏢 Plantilla INS descargada con 5 clientes de ejemplo. Lista para usar.', 'success');
+        }
+
+        function crearYDescargarExcel(datos, nombreArchivo) {
+            try {
+                // Crear workbook
+                const wb = XLSX.utils.book_new();
+                
+                // Crear worksheet
+                const ws = XLSX.utils.aoa_to_sheet(datos);
+                
+                // Ajustar ancho de columnas
+                const columnWidths = [
+                    { wch: 25 }, // Asegurado
+                    { wch: 20 }, // # Póliza  
+                    { wch: 15 }, // Aseguradora
+                    { wch: 10 }, // Monto
+                    { wch: 12 }, // Vencimiento
+                    { wch: 12 }, // Teléfono
+                    { wch: 25 }, // Email
+                    { wch: 12 }  // Forma de Pago
+                ];
+                ws['!cols'] = columnWidths;
+                
+                // Agregar worksheet al workbook
+                XLSX.utils.book_append_sheet(wb, ws, 'Cartera');
+                
+                // Descargar archivo
+                XLSX.writeFile(wb, nombreArchivo);
+                
+            } catch (error) {
+                mostrarNotificacion('Error al descargar plantilla: ' + error.message, 'error');
+            }
+        }
+
         // Funciones de persistencia
         function guardarDatos() {
             try {
@@ -1720,6 +1800,26 @@
         <!-- Tab Carga de Datos -->
         <div id="carga" class="tab-content active">
             <h2>📥 Carga de Datos Excel</h2>
+            
+            <!-- Sección de Plantillas Integrada -->
+            <div class="section" style="background: #e8f5e8; padding: 20px; border-radius: 10px; margin-bottom: 30px; border-left: 5px solid #27ae60;">
+                <h3>📋 ¿Primera vez? Descarga una Plantilla</h3>
+                <p>Descarga una plantilla con el formato correcto para empezar:</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <button class="upload-btn" onclick="descargarPlantillaVacia()" style="background: #27ae60;">
+                        📋 Plantilla Vacía
+                        <br><small style="opacity: 0.8;">Para llenar con tus datos</small>
+                    </button>
+                    <button class="upload-btn" onclick="descargarEjemploCompleto()" style="background: #3498db;">
+                        📊 Ejemplo con Datos
+                        <br><small style="opacity: 0.8;">Para ver el formato correcto</small>
+                    </button>
+                    <button class="upload-btn" onclick="descargarPlantillaINS()" style="background: #e74c3c;">
+                        🏢 Solo INS
+                        <br><small style="opacity: 0.8;">Específica para INS</small>
+                    </button>
+                </div>
+            </div>
             
             <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
                 <div id="uploadContent">
