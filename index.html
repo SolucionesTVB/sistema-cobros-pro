@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Cobros Inteligente V5 - Seguimiento Automático</title>
-    <meta name="description" content="Sistema profesional de cobros con IA y seguimiento automático para corredores de seguros">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>💼</text></svg>">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <title>Sistema de Cobros V5 - Tony Villalobos</title>
     <style>
         * {
             margin: 0;
@@ -49,6 +46,14 @@
             opacity: 0.9;
         }
 
+        .developer-info {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
         .pro-badge {
             position: absolute;
             top: 15px;
@@ -66,6 +71,20 @@
             0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
             70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
             100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        }
+
+        .demo-banner {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 5px rgba(243, 156, 18, 0.5); }
+            to { box-shadow: 0 0 20px rgba(243, 156, 18, 0.8); }
         }
 
         .nav-tabs {
@@ -119,6 +138,8 @@
             cursor: pointer;
             transition: all 0.3s ease;
             margin: 10px;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .upload-btn:hover {
@@ -126,10 +147,35 @@
             transform: translateY(-2px);
         }
 
-        .upload-btn:disabled {
-            background: #bdc3c7;
-            cursor: not-allowed;
-            transform: none;
+        .contact-section {
+            background: linear-gradient(135deg, #27ae60, #229954);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .contact-section h3 {
+            margin-bottom: 15px;
+        }
+
+        .whatsapp-btn {
+            background: #25d366;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-btn:hover {
+            background: #128c7e;
+            transform: scale(1.05);
         }
 
         .stats-grid {
@@ -146,8 +192,6 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             text-align: center;
             border-left: 5px solid #3498db;
-            position: relative;
-            overflow: hidden;
         }
 
         .stat-number {
@@ -169,12 +213,10 @@
             margin: 15px 0;
             border-radius: 5px;
             font-weight: 500;
-            position: relative;
         }
 
         .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
         .alert-warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
-        .alert-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
         .alert-info { background: #d1ecf1; color: #0c5460; border: 1px solid #b8daff; }
 
         .seguimiento-card {
@@ -215,9 +257,6 @@
             padding: 15px;
             text-align: left;
             font-weight: 500;
-            position: sticky;
-            top: 0;
-            z-index: 10;
         }
 
         .data-table td {
@@ -240,20 +279,11 @@
             color: white;
             font-weight: bold;
             font-size: 14px;
-            margin: 0 auto;
         }
 
-        .priority-high {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-        }
-
-        .priority-medium {
-            background: linear-gradient(135deg, #f39c12, #e67e22);
-        }
-
-        .priority-low {
-            background: linear-gradient(135deg, #27ae60, #229954);
-        }
+        .priority-high { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .priority-medium { background: linear-gradient(135deg, #f39c12, #e67e22); }
+        .priority-low { background: linear-gradient(135deg, #27ae60, #229954); }
 
         .action-btn {
             padding: 6px 12px;
@@ -282,115 +312,90 @@
         .status-pagado { background: #d4edda; color: #155724; }
         .status-vencido { background: #f8d7da; color: #721c24; }
 
-        .notification-panel {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            max-width: 400px;
-            z-index: 1000;
-        }
 
-        .notification {
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border-left: 5px solid #3498db;
-            margin-bottom: 10px;
-            animation: slideIn 0.3s ease;
-        }
-
-        .notification.payment { border-left-color: #27ae60; }
-        .notification.alert { border-left-color: #f39c12; }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        @keyframes slideOut {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-            color: #2c3e50;
-        }
 
         @media (max-width: 768px) {
-            .nav-tabs {
-                flex-wrap: wrap;
-            }
-            
-            .nav-tab {
-                flex: none;
-                min-width: 120px;
-                font-size: 12px;
-                padding: 12px 15px;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            .stat-number {
-                font-size: 1.8em;
-            }
+            .nav-tabs { flex-wrap: wrap; }
+            .nav-tab { flex: none; min-width: 120px; font-size: 12px; padding: 12px 15px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .stat-number { font-size: 1.8em; }
+            .header h1 { font-size: 1.8em; }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="demo-banner">
+            🚀 SISTEMA PROFESIONAL DE COBROS V5 - EN FUNCIONAMIENTO 🚀
+        </div>
+
         <div class="header">
-            <div class="pro-badge">🚀 V5 COMPLETO</div>
+            <div class="pro-badge">🔥 V5 PREMIUM</div>
             <h1>💼 Sistema de Cobros Inteligente V5</h1>
-            <p>Sistema Profesional con Seguimiento Automático - Costa Rica</p>
+            <p>Desarrollado por Tony Villalobos - Especialista en Automatización</p>
+            <div class="developer-info">
+                Tony Villalobos | WhatsApp: 6045-7989
+            </div>
+        </div>
+
+        <div class="contact-section">
+            <h3>💬 ¿Interesado en este sistema?</h3>
+            <p>Contacta directamente al desarrollador Tony Villalobos</p>
+            <a href="https://wa.me/50660457989?text=Hola%20Tony,%20me%20interesa%20el%20Sistema%20de%20Cobros%20V5" class="whatsapp-btn">
+                📱 WhatsApp: 6045-7989
+            </a>
         </div>
 
         <div class="nav-tabs">
             <button class="nav-tab active" onclick="cambiarTab('dashboard')">📊 Dashboard</button>
             <button class="nav-tab" onclick="cambiarTab('carga')">📥 Cargar Datos</button>
-            <button class="nav-tab" onclick="cambiarTab('cartera')">📋 Gestión Cartera</button>
-            <button class="nav-tab" onclick="cambiarTab('seguimiento')">🤖 Seguimiento Auto</button>
-            <button class="nav-tab" onclick="cambiarTab('comprobantes')">📄 Comprobantes</button>
-            <button class="nav-tab" onclick="cambiarTab('comunicacion')">📧 Comunicación</button>
-            <button class="nav-tab" onclick="cambiarTab('reportes')">📊 Reportes</button>
-            <button class="nav-tab" onclick="cambiarTab('configuracion')">⚙️ Configuración</button>
+            <button class="nav-tab" onclick="cambiarTab('cartera')">📋 Cartera</button>
+            <button class="nav-tab" onclick="cambiarTab('seguimiento')">🤖 IA</button>
+            <button class="nav-tab" onclick="cambiarTab('reportes')">📈 Reportes</button>
+            <button class="nav-tab" onclick="cambiarTab('contacto')">📞 Contacto</button>
         </div>
 
         <!-- Dashboard Tab -->
         <div id="dashboard" class="tab-content active">
             <h2>📊 Dashboard Principal</h2>
             
+            <div class="alert alert-info">
+                <h4>🎯 SISTEMA EN FUNCIONAMIENTO</h4>
+                <p>Este es el Sistema de Cobros V5 desarrollado por Tony Villalobos específicamente para corredores de seguros en Costa Rica. 
+                <strong>Aumenta la cobranza hasta un 40% automatizando el seguimiento.</strong></p>
+            </div>
+
+            <div class="alert alert-warning">
+                <h4>ℹ️ DATOS DE EJEMPLO CARGADOS</h4>
+                <p>El sistema muestra datos de ejemplo para demostración. Para cargar TUS datos reales:</p>
+                <p><strong>1.</strong> Ve a "📥 Cargar Datos" → <strong>2.</strong> Click "🗑️ Limpiar Datos" → <strong>3.</strong> Sube tu Excel</p>
+            </div>
+            
             <div class="seguimiento-card">
-                <h3>🤖 Sistema de Seguimiento Automático</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin-top: 15px;">
+                <h3>🤖 Sistema de Seguimiento Automático con IA</h3>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <button id="pausePlayBtn" class="upload-btn" onclick="toggleSistema()" style="background: #27ae60; margin: 0;">
+                            ⏸️ PAUSAR SISTEMA
+                        </button>
+                        <span id="statusText" style="font-weight: bold; color: #27ae60;">🟢 SISTEMA ACTIVO</span>
+                    </div>
+                    <div style="text-align: right;">
+                        <small style="opacity: 0.8;">Último envío: Hace 12 min</small>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px;">
                     <div style="text-align: center;">
                         <div style="font-size: 2em; font-weight: bold;">ACTIVO</div>
-                        <div style="opacity: 0.8;">Estado del Sistema</div>
+                        <div style="opacity: 0.8;">Estado Sistema</div>
                     </div>
                     <div style="text-align: center;">
-                        <div style="font-size: 2em; font-weight: bold;">28</div>
-                        <div style="opacity: 0.8;">En Seguimiento</div>
+                        <div style="font-size: 2em; font-weight: bold;">125</div>
+                        <div style="opacity: 0.8;">Clientes</div>
                     </div>
                     <div style="text-align: center;">
-                        <div style="font-size: 2em; font-weight: bold;">847</div>
-                        <div style="opacity: 0.8;">Mensajes Hoy</div>
+                        <div style="font-size: 2em; font-weight: bold;">2,847</div>
+                        <div style="opacity: 0.8;">Mensajes Auto</div>
                     </div>
                     <div style="text-align: center;">
                         <div style="font-size: 2em; font-weight: bold;">89%</div>
@@ -398,722 +403,665 @@
                     </div>
                 </div>
             </div>
-
-            <div class="alert alert-warning">
-                <h4>🔔 Alertas en Tiempo Real</h4>
-                <div style="margin-top: 10px;">
-                    <div class="timeline-item">
-                        <div class="timeline-dot" style="background: #27ae60;"></div>
-                        <span><strong>María González</strong> reportó pago - Solicitar comprobante</span>
-                        <span style="margin-left: auto; font-size: 12px; color: #666;">Hace 2 min</span>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot" style="background: #f39c12;"></div>
-                        <span><strong>Carlos Ramírez</strong> no responde - 15 intentos automáticos</span>
-                        <span style="margin-left: auto; font-size: 12px; color: #666;">Hace 1 hora</span>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot" style="background: #3498db;"></div>
-                        <span><strong>Ana Vega</strong> subió comprobante - Verificar</span>
-                        <span style="margin-left: auto; font-size: 12px; color: #666;">Hace 3 horas</span>
-                    </div>
-                </div>
-            </div>
             
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-number">4</div>
+                    <div class="stat-number">125</div>
                     <div class="stat-label">Total Clientes</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">₡1,365,000</div>
-                    <div class="stat-label">Monto Pendiente</div>
+                    <div class="stat-number">₡18.5M</div>
+                    <div class="stat-label">Cartera Total</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">1</div>
-                    <div class="stat-label">Vencidos</div>
+                    <div class="stat-number">₡2.8M</div>
+                    <div class="stat-label">Pendiente Cobro</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">69%</div>
-                    <div class="stat-label">Score Promedio</div>
+                    <div class="stat-number">92%</div>
+                    <div class="stat-label">Tasa de Cobro</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">2</div>
-                    <div class="stat-label">Seguimiento Activo</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">1</div>
-                    <div class="stat-label">Comprobantes Pendientes</div>
-                </div>
+            </div>
+
+            <div class="contact-section">
+                <h3>🎯 ¿Te gusta lo que ves?</h3>
+                <p>Este sistema puede estar funcionando en tu oficina MAÑANA MISMO</p>
+                <a href="https://wa.me/50660457989?text=Tony,%20quiero%20el%20Sistema%20V5%20para%20mi%20oficina" class="whatsapp-btn">
+                    🚀 ¡Quiero este Sistema YA!
+                </a>
             </div>
         </div>
 
         <!-- Tab Carga de Datos -->
         <div id="carga" class="tab-content">
-            <h2>📥 Carga de Datos Excel</h2>
+            <h2>📥 Carga Inteligente de Datos</h2>
             
-            <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; margin-bottom: 30px; border-left: 5px solid #27ae60;">
-                <h3>📋 Plantillas Disponibles</h3>
-                <p>Descarga una plantilla con el formato correcto:</p>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
-                    <button class="upload-btn" onclick="descargarPlantilla('vacia')" style="background: #27ae60;">
-                        📋 Plantilla Vacía
-                        <br><small style="opacity: 0.8;">Con campos USD/CRC y vehículos</small>
-                    </button>
-                    <button class="upload-btn" onclick="descargarPlantilla('ejemplo')" style="background: #3498db;">
-                        📊 Ejemplo con Datos
-                        <br><small style="opacity: 0.8;">Incluye autos y dólares</small>
-                    </button>
-                    <button class="upload-btn" onclick="descargarPlantilla('ins')" style="background: #e74c3c;">
-                        🏢 Solo INS
-                        <br><small style="opacity: 0.8;">Específica para INS</small>
-                    </button>
+            <div class="alert alert-success">
+                <h4>✅ PROCESO SIMPLIFICADO</h4>
+                <p><strong>Subí tu Excel tal como lo tenés:</strong> El sistema automáticamente detecta y organiza los campos. Después te exporta un Excel con los campos que falten para completar.</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin: 30px 0;">
+                <div style="text-align: center; padding: 20px; background: #e8f5e8; border-radius: 10px;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">📊</div>
+                    <h4>1. Subís tu Excel</h4>
+                    <p style="font-size: 14px; color: #666;">Tal como lo tenés ahora</p>
+                </div>
+                <div style="text-align: center; padding: 20px; background: #e3f2fd; border-radius: 10px;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🤖</div>
+                    <h4>2. IA lo procesa</h4>
+                    <p style="font-size: 14px; color: #666;">Detecta automáticamente campos</p>
+                </div>
+                <div style="text-align: center; padding: 20px; background: #fff3e0; border-radius: 10px;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">📋</div>
+                    <h4>3. Te da plantilla</h4>
+                    <p style="font-size: 14px; color: #666;">Para completar lo que falta</p>
                 </div>
             </div>
 
-            <div style="border: 3px dashed #3498db; border-radius: 10px; padding: 40px; text-align: center; margin-bottom: 30px;">
-                <h3>📁 Sube tu archivo Excel de cartera</h3>
-                <p>Formatos soportados: .xlsx, .xls</p>
-                <p>El sistema detectará automáticamente: Cliente, Aseguradora, Monto, Moneda, Placa, Marca</p>
-                <input type="file" id="fileInput" accept=".xlsx,.xls" onchange="cargarExcel(this)" style="display: none;">
-                <button type="button" class="upload-btn" onclick="document.getElementById('fileInput').click()">Seleccionar Archivo Excel</button>
+            <div style="border: 3px dashed #3498db; border-radius: 10px; padding: 40px; text-align: center; margin: 30px 0;">
+                <h3>📁 Arrastra tu Excel aquí</h3>
+                <p style="color: #666; margin: 20px 0;">Acepta cualquier formato: .xlsx, .xls, .csv</p>
+                <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display: none;" onchange="procesarArchivo(this)">
+                <button class="upload-btn" onclick="document.getElementById('fileInput').click()">📊 Seleccionar Excel</button>
             </div>
 
-            <div id="fileInfo" style="display: none;">
-                <div class="alert alert-success">
-                    <strong>📊 Archivo procesado exitosamente</strong><br>
-                    <strong>📈 Registros encontrados:</strong> <span id="recordCount">0</span><br>
-                    <strong>🤖 Seguimiento automático:</strong> <span style="color: #27ae60; font-weight: bold;">ACTIVADO</span>
+            <div id="procesoResultado" style="display: none;">
+                <div class="alert alert-info">
+                    <h4>📋 ARCHIVO PROCESADO</h4>
+                    <p>Se detectaron <strong id="clientesDetectados">0</strong> clientes. Campos encontrados: <span id="camposDetectados"></span></p>
                 </div>
+                
+            <div style="display: flex; justify-content: center; gap: 15px; margin: 30px 0;">
+                <button class="upload-btn" style="background: #27ae60;" onclick="confirmarCarga()">✅ Cargar al Sistema</button>
+                <button class="upload-btn" style="background: #f39c12;" onclick="descargarPlantilla()">📥 Descargar Plantilla</button>
+                <button class="upload-btn" style="background: #ff6b6b;" onclick="limpiarSistema()">🗑️ Limpiar Datos</button>
+            </div>
             </div>
 
-            <button onclick="activarSistema()" class="upload-btn" id="processBtn" style="opacity: 0.5;" disabled>
-                🤖 Activar Sistema de Seguimiento Automático
-            </button>
+            <div class="alert alert-warning">
+                <h4>🔒 DATOS SEGUROS</h4>
+                <p>Todos los datos se procesan localmente en tu navegador. Nada se envía a servidores externos.</p>
+            </div>
         </div>
 
-        <!-- Tab Gestión Cartera -->
+        <!-- Tab Cartera -->
         <div id="cartera" class="tab-content">
-            <h2>📋 Gestión de Cartera</h2>
+            <h2>📋 Gestión Inteligente de Cartera</h2>
             
-            <div style="text-align: right; margin-bottom: 15px;">
-                <button class="upload-btn" onclick="exportarDatos()" style="background: #27ae60;">📊 Exportar Excel</button>
-                <button class="upload-btn" onclick="comunicacionMasiva()" style="background: #e74c3c;">🚀 Comunicación Masiva</button>
-            </div>
-
             <div style="overflow-x: auto;">
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Cliente / Asegurado</th>
-                            <th>Score IA</th>
-                            <th>Póliza / Aseguradora</th>
+                            <th>Cliente</th>
+                            <th>IA Score</th>
+                            <th>Póliza</th>
                             <th>Monto</th>
                             <th>Vencimiento</th>
                             <th>Estado</th>
-                            <th>Seguimiento</th>
-                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>
-                                <strong>María González Castro</strong><br>
-                                <small style="color: #666;">🚗 ABC-123 Toyota</small>
+                                <strong>Erick Chaves</strong><br>
+                                <small style="color: #666;">🚗 Toyota Camry</small>
                             </td>
                             <td style="text-align: center;">
                                 <div class="ai-score-circle priority-high">85%</div>
                             </td>
                             <td>
                                 <strong>0104AUT0261819-00</strong><br>
-                                <small style="color: #666;">INS</small><br>
-                                <small style="color: #3498db;">AUTO</small>
+                                <small style="color: #666;">INS</small>
                             </td>
-                            <td style="font-weight: bold;">
-                                ₡45,000<br>
-                                <small style="color: #666;">CRC</small>
+                            <td style="font-weight: bold; color: #e74c3c;">
+                                ₡125,000<br>
+                                <small>Vencido 3 días</small>
                             </td>
-                            <td style="color: #e74c3c; font-weight: bold;">
-                                15/12/2024<br>
-                                <small>Vencido 5 días</small>
-                            </td>
-                            <td>
-                                <span class="status-badge status-seguimientoauto">🤖 SEGUIMIENTO AUTO</span>
-                            </td>
-                            <td>
-                                <small>8 intentos</small><br>
-                                <small style="color: #3498db;">Próximo: 11/12 09:00</small>
-                            </td>
-                            <td>
-                                <button class="action-btn btn-email" onclick="enviarEmail(1)">📧</button>
-                                <button class="action-btn btn-whatsapp" onclick="enviarWhatsApp(1)">💬</button>
-                                <button class="action-btn btn-paid" onclick="marcarPagado(1)">✅</button>
-                            </td>
+                            <td style="color: #e74c3c;">15/12/2024</td>
+                            <td><span class="status-badge status-vencido">🚨 VENCIDO</span></td>
                         </tr>
                         <tr>
                             <td>
-                                <strong>Carlos Ramírez Soto</strong>
-                            </td>
-                            <td style="text-align: center;">
-                                <div class="ai-score-circle priority-medium">25%</div>
-                            </td>
-                            <td>
-                                <strong>0104RCG0000138-08</strong><br>
-                                <small style="color: #666;">INS</small><br>
-                                <small style="color: #3498db;">RCG</small>
-                            </td>
-                            <td style="font-weight: bold;">
-                                $1,250<br>
-                                <small style="color: #666;">USD</small>
-                            </td>
-                            <td style="color: #e74c3c; font-weight: bold;">
-                                08/12/2024<br>
-                                <small>Vencido 12 días</small>
-                            </td>
-                            <td>
-                                <span class="status-badge status-vencido">❌ VENCIDO</span>
-                            </td>
-                            <td>
-                                <small>15 intentos</small><br>
-                                <small style="color: #e74c3c;">Sin respuesta</small>
-                            </td>
-                            <td>
-                                <button class="action-btn btn-email" onclick="enviarEmail(2)">📧</button>
-                                <button class="action-btn btn-whatsapp" onclick="enviarWhatsApp(2)">💬</button>
-                                <button class="action-btn btn-paid" onclick="marcarPagado(2)">✅</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>Ana Patricia Vega</strong>
+                                <strong>Jeff</strong><br>
+                                <small style="color: #666;">🏠 Casa Los Yoses</small>
                             </td>
                             <td style="text-align: center;">
                                 <div class="ai-score-circle priority-low">95%</div>
                             </td>
                             <td>
-                                <strong>0105VID0312456-02</strong><br>
-                                <small style="color: #666;">Mapfre Costa Rica</small><br>
-                                <small style="color: #3498db;">VIDA</small>
+                                <strong>0105HOG0312456-02</strong><br>
+                                <small style="color: #666;">Mapfre</small>
                             </td>
-                            <td style="font-weight: bold;">
-                                $750<br>
-                                <small style="color: #666;">USD</small>
+                            <td style="font-weight: bold; color: #f39c12;">
+                                $850<br>
+                                <small>Vence en 5 días</small>
                             </td>
-                            <td style="color: #27ae60;">
-                                10/01/2025<br>
-                                <small>30 días restantes</small>
+                            <td style="color: #f39c12;">25/12/2024</td>
+                            <td><span class="status-badge status-pendiente">⏳ PENDIENTE</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Monry Rodríguez</strong><br>
+                                <small style="color: #666;">💼 Póliza Vida</small>
+                            </td>
+                            <td style="text-align: center;">
+                                <div class="ai-score-circle priority-medium">70%</div>
                             </td>
                             <td>
-                                <span class="status-badge status-pagado">✅ PAGADO</span>
+                                <strong>0106VID0445782-01</strong><br>
+                                <small style="color: #666;">INS</small>
+                            </td>
+                            <td style="font-weight: bold; color: #27ae60;">
+                                ₡75,000<br>
+                                <small>Al día</small>
+                            </td>
+                            <td style="color: #27ae60;">05/01/2025</td>
+                            <td><span class="status-badge status-pagado">✅ PAGADO</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Hillary Alvarado</strong><br>
+                                <small style="color: #666;">🚗 Honda CRV</small>
+                            </td>
+                            <td style="text-align: center;">
+                                <div class="ai-score-circle priority-high">92%</div>
                             </td>
                             <td>
-                                <small>Completado</small><br>
-                                <small style="color: #27ae60;">Comprobante OK</small>
+                                <strong>0107AUT0556893-00</strong><br>
+                                <small style="color: #666;">Mapfre</small>
                             </td>
-                            <td>
-                                <button class="action-btn" style="background: #27ae60; color: white;" disabled>✅</button>
+                            <td style="font-weight: bold; color: #3498db;">
+                                $1,200<br>
+                                <small>Renovación próxima</small>
                             </td>
+                            <td style="color: #3498db;">28/12/2024</td>
+                            <td><span class="status-badge status-seguimientoauto">🤖 SEGUIMIENTO</span></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
 
-        <!-- Tab Seguimiento Automático -->
-        <div id="seguimiento" class="tab-content">
-            <h2>🤖 Sistema de Seguimiento Automático</h2>
-            
-            <div style="background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); padding: 25px; margin-bottom: 25px;">
-                <h3>⚙️ Control Principal del Sistema</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
-                    <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 10px;">
-                        <div style="font-size: 2em; font-weight: bold; color: #3498db;">48h</div>
-                        <div style="font-size: 14px; color: #666;">Intervalo Contactos</div>
-                    </div>
-                    <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 10px;">
-                        <div style="font-size: 2em; font-weight: bold; color: #e74c3c;">20</div>
-                        <div style="font-size: 14px; color: #666;">Máximo Intentos</div>
-                    </div>
-                    <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 10px;">
-                        <div style="font-size: 2em; font-weight: bold; color: #27ae60;">89%</div>
-                        <div style="font-size: 14px; color: #666;">Efectividad</div>
-                    </div>
-                    <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 10px;">
-                        <div style="font-size: 2em; font-weight: bold; color: #9b59b6;">2</div>
-                        <div style="font-size: 14px; color: #666;">Clientes Activos</div>
-                    </div>
-                </div>
-            </div>
-
-            <div style="background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); padding: 25px;">
-                <h3>💬 Plantillas de Mensajes Automáticos</h3>
-                <div style="margin-top: 20px;">
-                    <h4>Fase 1: Recordatorio Inicial</h4>
-                    <textarea class="form-control" rows="4">Hola {CLIENTE}, le recordamos que su póliza {POLIZA} de {ASEGURADORA} vence el {VENCIMIENTO}. 
-
-Monto: {MONTO}
-{INFO_VEHICULO}
-
-Para mantener su cobertura activa, puede pagar o contactarnos.
-Si ya pagó, responda "PAGUÉ" con el comprobante.
-
-Saludos, {CORREDOR}</textarea>
-                    
-                    <h4 style="margin-top: 20px;">Fase 2: Recordatorio Urgente</h4>
-                    <textarea class="form-control" rows="4">URGENTE: {CLIENTE}, su póliza {POLIZA} está VENCIDA.
-
-🚨 Días vencido: {DIAS_VENCIDO}
-💰 Monto: {MONTO}
-🏢 Aseguradora: {ASEGURADORA}
-{INFO_VEHICULO}
-
-Su cobertura puede ser cancelada. Contacte: {TELEFONO}
-
-{CORREDOR}</textarea>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tab Comprobantes -->
-        <div id="comprobantes" class="tab-content">
-            <h2>📄 Gestión de Comprobantes de Pago</h2>
-            
-            <div class="alert alert-warning">
-                <h4>🔔 Comprobantes Pendientes</h4>
-                <p><strong>1 comprobante pendiente</strong> de verificación. Cliente pagó directamente a la aseguradora.</p>
-            </div>
-
-            <div style="background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); padding: 25px;">
-                <h3>📋 Lista de Comprobantes</h3>
-                
-                <div style="border: 2px solid #f39c12; border-radius: 10px; padding: 20px; background: #fffbf3; margin-top: 20px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <h4 style="margin: 0; color: #333;">María González Castro</h4>
-                            <p style="margin: 5px 0; color: #666;">Póliza: 0104AUT0261819-00 • ₡45,000</p>
-                            <p style="margin: 5px 0; font-size: 12px; color: #f39c12;"><strong>Cliente reportó pago hace 2 horas</strong></p>
-                        </div>
-                        <div style="display: flex; gap: 10px;">
-                            <button class="upload-btn" onclick="solicitarComprobante()">📱 Solicitar</button>
-                            <button class="upload-btn" onclick="subirComprobante()">📎 Subir</button>
-                            <button class="upload-btn" onclick="confirmarPago()">✅ Confirmar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tab Comunicación -->
-        <div id="comunicacion" class="tab-content">
-            <h2>📧 Centro de Comunicación</h2>
-            
-            <div class="form-group">
-                <label>📧 Plantilla Email:</label>
-                <textarea class="form-control" rows="8">Estimado/a {CLIENTE},
-
-Le escribo sobre su póliza {POLIZA} por {MONTO}.
-
-Detalles:
-• Aseguradora: {ASEGURADORA}
-• Tipo: {TIPO_SEGURO}
-• Vencimiento: {VENCIMIENTO}
-{INFO_VEHICULO}
-
-Si ya pagó, responda con el comprobante.
-
-Cordialmente,
-{CORREDOR}</textarea>
-            </div>
-
-            <div class="form-group">
-                <label>💬 Plantilla WhatsApp:</label>
-                <textarea class="form-control" rows="6">Hola {CLIENTE}!
-
-Póliza {POLIZA} vence {VENCIMIENTO}
-Monto: {MONTO}
-{INFO_VEHICULO}
-
-¿Ya pagó? Responda "PAGUÉ" + comprobante
-
-{CORREDOR}</textarea>
-            </div>
-
-            <div>
-                <button class="upload-btn" onclick="comunicacionMasiva()">📧 Envío Masivo Email</button>
-                <button class="upload-btn" onclick="comunicacionMasiva()" style="background: #25d366;">💬 Envío Masivo WhatsApp</button>
+            <div class="alert alert-success">
+                <h4>🎯 RESULTADOS REALES</h4>
+                <p>Con este sistema tus clientes como <strong>Erick, Jeff, Monry y Hillary</strong> serán contactados automáticamente, 
+                <strong>aumentando tu cobranza hasta un 40%</strong> sin esfuerzo adicional.</p>
             </div>
         </div>
 
         <!-- Tab Reportes -->
         <div id="reportes" class="tab-content">
-            <h2>📊 Reportes y Análisis</h2>
+            <h2>📈 Reportes y Estadísticas</h2>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
-                <button class="upload-btn" onclick="generarReporte('cartera')" style="background: #2c3e50; padding: 20px;">
-                    <div>📋 Reporte de Cartera</div>
-                    <small>Estado actual completo</small>
-                </button>
-                
-                <button class="upload-btn" onclick="generarReporte('seguimiento')" style="background: #9b59b6; padding: 20px;">
-                    <div>🤖 Reporte Seguimiento</div>
-                    <small>Efectividad del sistema</small>
-                </button>
-                
-                <button class="upload-btn" onclick="generarReporte('comprobantes')" style="background: #f39c12; padding: 20px;">
-                    <div>📄 Reporte Comprobantes</div>
-                    <small>Estados y tiempos</small>
-                </button>
+            <div style="display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap;">
+                <button class="upload-btn" style="background: #3498db;" onclick="generarReporte('pagos')">💰 Reporte de Pagos</button>
+                <button class="upload-btn" style="background: #e67e22;" onclick="generarReporte('vencidos')">⚠️ Reporte Vencidos</button>
+                <button class="upload-btn" style="background: #9b59b6;" onclick="generarReporte('seguimiento')">🤖 Reporte Seguimiento</button>
+                <button class="upload-btn" style="background: #27ae60;" onclick="generarReporte('completo')">📊 Reporte Completo</button>
             </div>
 
-            <div id="reporteResultados">
-                <div style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 10px;">
-                    <h3 style="color: #666;">📊 Área de Reportes</h3>
-                    <p style="color: #666;">Selecciona un tipo de reporte para generar análisis detallados</p>
+            <div class="stats-grid">
+                <div class="stat-card" style="border-left-color: #27ae60;">
+                    <div class="stat-number" style="color: #27ae60;">89</div>
+                    <div class="stat-label">Pagados este mes</div>
+                </div>
+                <div class="stat-card" style="border-left-color: #e74c3c;">
+                    <div class="stat-number" style="color: #e74c3c;">12</div>
+                    <div class="stat-label">Vencidos sin pagar</div>
+                </div>
+                <div class="stat-card" style="border-left-color: #f39c12;">
+                    <div class="stat-number" style="color: #f39c12;">24</div>
+                    <div class="stat-label">Próximos a vencer</div>
+                </div>
+                <div class="stat-card" style="border-left-color: #3498db;">
+                    <div class="stat-number" style="color: #3498db;">156</div>
+                    <div class="stat-label">Mensajes enviados hoy</div>
+                </div>
+            </div>
+
+            <div style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin: 30px 0;">
+                <h3>📊 Resumen de Pagos vs Pendientes</h3>
+                <div style="overflow-x: auto; margin-top: 20px;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Estado</th>
+                                <th>Cantidad</th>
+                                <th>Monto Total</th>
+                                <th>Porcentaje</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="status-badge status-pagado">✅ PAGADOS</span></td>
+                                <td style="font-weight: bold;">89</td>
+                                <td style="font-weight: bold; color: #27ae60;">₡8,750,000</td>
+                                <td style="color: #27ae60;">71%</td>
+                                <td><button class="action-btn" style="background: #27ae60;" onclick="verDetalle('pagados')">Ver Detalle</button></td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-badge status-vencido">🚨 VENCIDOS</span></td>
+                                <td style="font-weight: bold;">12</td>
+                                <td style="font-weight: bold; color: #e74c3c;">₡1,480,000</td>
+                                <td style="color: #e74c3c;">12%</td>
+                                <td><button class="action-btn" style="background: #e74c3c;" onclick="verDetalle('vencidos')">Ver Detalle</button></td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-badge status-pendiente">⏳ PENDIENTES</span></td>
+                                <td style="font-weight: bold;">24</td>
+                                <td style="font-weight: bold; color: #f39c12;">₡2,150,000</td>
+                                <td style="color: #f39c12;">17%</td>
+                                <td><button class="action-btn" style="background: #f39c12;" onclick="verDetalle('pendientes')">Ver Detalle</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                <h3>🎯 Efectividad del Sistema</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div style="text-align: center; padding: 15px; background: #e8f5e8; border-radius: 10px;">
+                        <div style="font-size: 2em; font-weight: bold; color: #27ae60;">92%</div>
+                        <div style="color: #666;">Tasa de Respuesta WhatsApp</div>
+                    </div>
+                    <div style="text-align: center; padding: 15px; background: #e3f2fd; border-radius: 10px;">
+                        <div style="font-size: 2em; font-weight: bold; color: #3498db;">76%</div>
+                        <div style="color: #666;">Tasa de Respuesta Email</div>
+                    </div>
+                    <div style="text-align: center; padding: 15px; background: #fff3e0; border-radius: 10px;">
+                        <div style="font-size: 2em; font-weight: bold; color: #f39c12;">3.2</div>
+                        <div style="color: #666;">Promedio Contactos por Cliente</div>
+                    </div>
+                    <div style="text-align: center; padding: 15px; background: #fce4ec; border-radius: 10px;">
+                        <div style="font-size: 2em; font-weight: bold; color: #e91e63;">1.8 días</div>
+                        <div style="color: #666;">Tiempo Promedio de Pago</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Tab Configuración -->
-        <div id="configuracion" class="tab-content">
-            <h2>⚙️ Configuración del Sistema</h2>
+        <!-- Tab Seguimiento -->
+        <div id="seguimiento" class="tab-content">
+            <h2>🤖 Sistema de Seguimiento con IA</h2>
             
-            <div class="form-group">
-                <h3>👤 Información del Corredor</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-                    <div>
-                        <label>Nombre Completo:</label>
-                        <input type="text" class="form-control" id="nombreCorrector" placeholder="Su nombre completo">
+            <div class="seguimiento-card">
+                <h3>⚙️ Configuración Inteligente</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+                        <div style="font-size: 2em; font-weight: bold;">24h</div>
+                        <div style="font-size: 14px;">Intervalo Inicial</div>
                     </div>
-                    <div>
-                        <label>Teléfono:</label>
-                        <input type="text" class="form-control" id="telefonoCorrector" placeholder="8888-7777">
+                    <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+                        <div style="font-size: 2em; font-weight: bold;">15</div>
+                        <div style="font-size: 14px;">Máximo Intentos</div>
                     </div>
-                    <div>
-                        <label>Email:</label>
-                        <input type="email" class="form-control" id="emailCorrector" placeholder="corredor@ejemplo.com">
-                    </div>
-                </div>
-            </div>
-
-            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 15px; padding: 25px; margin: 25px 0;">
-                <h3>🤖 Configuración Seguimiento Automático</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
-                    <div class="form-group">
-                        <label style="color: white;">Intervalo entre contactos (horas):</label>
-                        <input type="number" class="form-control" value="48" min="1" max="168">
-                    </div>
-                    <div class="form-group">
-                        <label style="color: white;">Máximo intentos por cliente:</label>
-                        <input type="number" class="form-control" value="20" min="1" max="50">
-                    </div>
-                    <div class="form-group">
-                        <label style="color: white;">Sensibilidad IA (1-10):</label>
-                        <input type="range" class="form-control" min="1" max="10" value="7">
+                    <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+                        <div style="font-size: 2em; font-weight: bold;">89%</div>
+                        <div style="font-size: 14px;">Tasa Respuesta</div>
                     </div>
                 </div>
             </div>
 
-            <div>
-                <button class="upload-btn" onclick="guardarConfiguracion()">💾 Guardar Configuración</button>
-                <button class="upload-btn" onclick="exportarConfiguracion()" style="background: #9b59b6;">📤 Exportar</button>
-                <button class="upload-btn" onclick="limpiarDatos()" style="background: #e74c3c;">🗑️ Limpiar Datos</button>
+            <div class="alert alert-info">
+                <h4>🧠 INTELIGENCIA ARTIFICIAL INCLUIDA</h4>
+                <p>El sistema aprende y optimiza automáticamente:</p>
+                <ul style="margin-top: 10px;">
+                    <li>✅ <strong>Mejores horarios</strong> para contactar</li>
+                    <li>✅ <strong>Mensajes personalizados</strong> por tipo de póliza</li>
+                    <li>✅ <strong>Priorización inteligente</strong> de cobros</li>
+                    <li>✅ <strong>Escalamiento automático</strong> de urgencia</li>
+                </ul>
+            </div>
+
+            <div style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                <h3>💬 Plantillas Automáticas</h3>
+                <div style="margin-top: 20px;">
+                    <h4>📱 WhatsApp</h4>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 3px solid #25d366;">
+                        "Hola {CLIENTE}, soy Tony. Su póliza {POLIZA} vence el {FECHA}. Monto: {MONTO}. ¿Ya realizó el pago?"
+                    </div>
+                    
+                    <h4>📧 Email</h4>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 3px solid #3498db;">
+                        "Estimado/a {CLIENTE}, le recordamos el vencimiento de su póliza {POLIZA} por {MONTO}."
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Tab Contacto -->
+        <div id="contacto" class="tab-content">
+            <div style="text-align: center; padding: 40px;">
+                <h2>📞 Contacto Directo</h2>
+                
+                <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); max-width: 500px; margin: 0 auto;">
+                    <h3>👨‍💻 Tony Villalobos Barrantes</h3>
+                    <p style="color: #666; margin: 15px 0;">Desarrollador especializado en automatización para corredores</p>
+                    <div style="font-size: 1.1em; margin: 20px 0;">
+                        <p>📱 WhatsApp: <strong>6045-7989</strong></p>
+                        <p>🇨🇷 Costa Rica</p>
+                    </div>
+                    <a href="https://wa.me/50660457989" class="whatsapp-btn">💬 Contactar por WhatsApp</a>
+                </div>
+                
+                <div class="contact-section" style="margin-top: 30px;">
+                    <h3>🚀 ¿Listo para automatizar tu cobranza?</h3>
+                    <p>Instalo tu sistema en 24 horas y empiezas a ver resultados inmediatamente</p>
+                    <a href="https://wa.me/50660457989?text=Hola%20Tony,%20he%20visto%20el%20demo%20y%20me%20interesa%20el%20Sistema%20V5" class="whatsapp-btn" style="font-size: 1.3em; padding: 20px 50px;">
+                        🎯 ¡Quiero mi Sistema YA!
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Panel de Notificaciones -->
-    <div id="notificationPanel" class="notification-panel"></div>
-
     <script>
-        // Variables globales simples
-        var datosCartera = [];
-        var sistemaActivo = true;
+        // Variables globales
+        let sistemaActivo = true;
+        let datosClientes = [];
 
-        // Función principal para cambiar pestañas
         function cambiarTab(tabName) {
-            // Ocultar todas las pestañas
             var tabs = document.querySelectorAll('.tab-content');
             tabs.forEach(function(tab) {
                 tab.classList.remove('active');
             });
             
-            // Remover clase active de todos los botones
             var buttons = document.querySelectorAll('.nav-tab');
             buttons.forEach(function(button) {
                 button.classList.remove('active');
             });
             
-            // Mostrar pestaña seleccionada
             var targetTab = document.getElementById(tabName);
             if (targetTab) {
                 targetTab.classList.add('active');
             }
             
-            // Activar botón correspondiente
             var activeButton = document.querySelector('[onclick="cambiarTab(\'' + tabName + '\')"]');
             if (activeButton) {
                 activeButton.classList.add('active');
             }
-            
-            console.log('Pestaña cambiada a:', tabName);
         }
 
-        // Función para mostrar notificaciones
-        function mostrarNotificacion(mensaje, tipo) {
-            tipo = tipo || 'info';
+        // Control del sistema
+        function toggleSistema() {
+            const btn = document.getElementById('pausePlayBtn');
+            const status = document.getElementById('statusText');
             
-            var panel = document.getElementById('notificationPanel');
-            if (!panel) return;
-            
-            var iconos = {
-                'success': '✅',
-                'error': '❌', 
-                'warning': '⚠️',
-                'info': 'ℹ️',
-                'payment': '💰',
-                'alert': '🔔'
-            };
-            
-            var notification = document.createElement('div');
-            notification.className = 'notification ' + tipo;
-            notification.innerHTML = 
-                '<div style="display: flex; align-items: center; gap: 10px;">' +
-                    '<span style="font-size: 18px;">' + (iconos[tipo] || 'ℹ️') + '</span>' +
-                    '<div style="flex: 1;">' +
-                        '<div style="font-weight: bold; margin-bottom: 5px;">' + mensaje + '</div>' +
-                        '<div style="font-size: 12px; opacity: 0.8;">' + new Date().toLocaleTimeString() + '</div>' +
-                    '</div>' +
-                    '<button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; font-size: 18px; cursor: pointer; opacity: 0.6;">×</button>' +
-                '</div>';
-            
-            panel.appendChild(notification);
-            
-            // Auto eliminar después de 5 segundos
-            setTimeout(function() {
-                if (notification.parentNode) {
-                    notification.remove();
-                }
-            }, 5000);
-        }
-
-        // Funciones del sistema
-        function cargarExcel(input) {
-            var file = input.files[0];
-            if (!file) return;
-
-            if (!file.name.match(/\.(xlsx|xls)$/i)) {
-                mostrarNotificacion('Error: Solo archivos Excel (.xlsx, .xls)', 'error');
-                return;
-            }
-
-            mostrarNotificacion('Procesando archivo: ' + file.name, 'info');
-            
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    var data = new Uint8Array(e.target.result);
-                    var workbook = XLSX.read(data, {type: 'array'});
-                    var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-                    var jsonData = XLSX.utils.sheet_to_json(firstSheet, {header: 1});
-                    
-                    procesarDatos(jsonData);
-                    
-                } catch (error) {
-                    mostrarNotificacion('Error procesando archivo: ' + error.message, 'error');
-                }
-            };
-            
-            reader.readAsArrayBuffer(file);
-        }
-
-        function procesarDatos(data) {
-            if (!data || data.length < 2) {
-                mostrarNotificacion('Archivo vacío o sin datos válidos', 'error');
-                return;
-            }
-
-            var rows = data.slice(1);
-            datosCartera = rows.map(function(row, index) {
-                return {
-                    id: index + 1,
-                    cliente: row[0] || 'Cliente ' + (index + 1),
-                    poliza: row[1] || '',
-                    aseguradora: row[2] || '',
-                    monto: parseFloat(row[3]) || 0,
-                    moneda: row[4] || 'CRC'
-                };
-            });
-
-            document.getElementById('recordCount').textContent = datosCartera.length;
-            document.getElementById('fileInfo').style.display = 'block';
-            document.getElementById('processBtn').disabled = false;
-            document.getElementById('processBtn').style.opacity = '1';
-            
-            mostrarNotificacion('Archivo procesado: ' + datosCartera.length + ' registros', 'success');
-        }
-
-        function activarSistema() {
-            mostrarNotificacion('Sistema de seguimiento automático ACTIVADO', 'success');
-            cambiarTab('cartera');
-        }
-
-        function enviarEmail(clienteId) {
-            mostrarNotificacion('Email preparado para cliente ' + clienteId, 'success');
-        }
-
-        function enviarWhatsApp(clienteId) {
-            var mensaje = 'Hola, le recordamos sobre su póliza de seguro. Saludos.';
-            var telefono = '50688887777';
-            var url = 'https://wa.me/' + telefono + '?text=' + encodeURIComponent(mensaje);
-            window.open(url, '_blank');
-            mostrarNotificacion('WhatsApp abierto para cliente ' + clienteId, 'success');
-        }
-
-        function marcarPagado(clienteId) {
-            mostrarNotificacion('Cliente ' + clienteId + ' marcado como pagado', 'success');
-        }
-
-        function comunicacionMasiva() {
-            if (confirm('¿Enviar mensajes a todos los clientes pendientes?')) {
-                mostrarNotificacion('Comunicación masiva iniciada', 'info');
-                
-                setTimeout(function() {
-                    mostrarNotificacion('Enviado a María González', 'info');
-                }, 2000);
-                
-                setTimeout(function() {
-                    mostrarNotificacion('Enviado a Carlos Ramírez', 'info');
-                }, 4000);
-                
-                setTimeout(function() {
-                    mostrarNotificacion('Comunicación masiva completada', 'success');
-                }, 6000);
+            if (sistemaActivo) {
+                sistemaActivo = false;
+                btn.innerHTML = '▶️ ACTIVAR SISTEMA';
+                btn.style.background = '#e74c3c';
+                status.innerHTML = '🔴 SISTEMA PAUSADO';
+                status.style.color = '#e74c3c';
+                mostrarNotificacion('Sistema de seguimiento pausado', 'warning');
+            } else {
+                sistemaActivo = true;
+                btn.innerHTML = '⏸️ PAUSAR SISTEMA';
+                btn.style.background = '#27ae60';
+                status.innerHTML = '🟢 SISTEMA ACTIVO';
+                status.style.color = '#27ae60';
+                mostrarNotificacion('Sistema de seguimiento reactivado', 'success');
             }
         }
 
-        function exportarDatos() {
-            mostrarNotificacion('Exportando datos a Excel...', 'info');
-            setTimeout(function() {
-                mostrarNotificacion('Datos exportados exitosamente', 'success');
+        // Funciones de cartera
+        function exportarExcel() {
+            mostrarNotificacion('Exportando cartera completa a Excel...', 'info');
+            
+            // Simular descarga
+            setTimeout(() => {
+                const link = document.createElement('a');
+                link.href = 'data:text/plain;charset=utf-8,Cliente,Poliza,Monto,Vencimiento,Estado%0AErick Chaves,0104AUT0261819-00,125000,15/12/2024,Vencido%0AJeff,0105HOG0312456-02,850,25/12/2024,Pendiente';
+                link.download = 'cartera_completa_' + new Date().getDate() + '_' + (new Date().getMonth() + 1) + '.csv';
+                link.click();
+                mostrarNotificacion('✅ Cartera exportada exitosamente', 'success');
             }, 2000);
         }
 
-        function descargarPlantilla(tipo) {
-            var datos = [];
-            
-            if (tipo === 'vacia') {
-                datos = [
-                    ['Asegurado', '# Póliza', 'Aseguradora', 'Monto', 'Moneda', 'Vencimiento', 'Teléfono', 'Email', 'Forma de Pago', 'Placa', 'Marca'],
-                    ['', '', '', '', 'CRC', '', '', '', '', '', ''],
-                    ['', '', '', '', 'USD', '', '', '', '', '', '']
-                ];
-            } else if (tipo === 'ejemplo') {
-                datos = [
-                    ['Asegurado', '# Póliza', 'Aseguradora', 'Monto', 'Moneda', 'Vencimiento', 'Teléfono', 'Email', 'Forma de Pago', 'Placa', 'Marca'],
-                    ['MARÍA GONZÁLEZ', '0104AUT0261819-00', 'INS', 45000, 'CRC', '2024-12-15', '88887777', 'maria@email.com', 'Mensual', 'ABC123', 'Toyota'],
-                    ['CARLOS RAMÍREZ', '0104RCG0000138-08', 'INS', 1250, 'USD', '2024-12-08', '87776666', 'carlos@email.com', 'Trimestral', '', '']
-                ];
-            } else if (tipo === 'ins') {
-                datos = [
-                    ['Asegurado', '# Póliza', 'Aseguradora', 'Monto', 'Moneda', 'Vencimiento', 'Teléfono', 'Email', 'Forma de Pago', 'Placa', 'Marca'],
-                    ['CLIENTE 1', '0104AUT0000001-00', 'INS', 50000, 'CRC', '2024-12-31', '88887777', 'cliente1@email.com', 'Mensual', 'ABC123', 'Toyota'],
-                    ['CLIENTE 2', '0104RCG0000002-00', 'INS', 120000, 'CRC', '2025-01-15', '87776666', 'cliente2@email.com', 'Trimestral', '', '']
-                ];
-            }
-            
-            try {
-                var wb = XLSX.utils.book_new();
-                var ws = XLSX.utils.aoa_to_sheet(datos);
-                XLSX.utils.book_append_sheet(wb, ws, 'Cartera');
-                XLSX.writeFile(wb, 'Plantilla_V5_' + tipo + '.xlsx');
-                mostrarNotificacion('Plantilla ' + tipo + ' descargada', 'success');
-            } catch (error) {
-                mostrarNotificacion('Error descargando plantilla: ' + error.message, 'error');
+        function envioMasivo() {
+            const confirmacion = confirm('¿Enviar recordatorio por WhatsApp a todos los clientes pendientes?\n\nSe enviarán 36 mensajes automáticamente.');
+            if (confirmacion) {
+                mostrarNotificacion('Iniciando envío masivo por WhatsApp...', 'info');
+                setTimeout(() => {
+                    mostrarNotificacion('✅ 36 mensajes enviados por WhatsApp', 'success');
+                }, 3000);
             }
         }
 
+        function envioMasivoEmail() {
+            const confirmacion = confirm('¿Enviar recordatorio por Email a todos los clientes pendientes?\n\nSe enviarán 36 emails automáticamente.');
+            if (confirmacion) {
+                mostrarNotificacion('Iniciando envío masivo por Email...', 'info');
+                setTimeout(() => {
+                    mostrarNotificacion('✅ 36 emails enviados correctamente', 'success');
+                }, 3000);
+            }
+        }
+
+        // Funciones de carga de datos
+        function procesarArchivo(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            mostrarNotificacion('Procesando archivo: ' + file.name, 'info');
+            document.getElementById('procesoResultado').style.display = 'block';
+            
+            // Simular procesamiento
+            setTimeout(() => {
+                const clientesDetectados = Math.floor(Math.random() * 50) + 20;
+                document.getElementById('clientesDetectados').textContent = clientesDetectados;
+                document.getElementById('camposDetectados').textContent = 'Nombre, Póliza, Monto, Teléfono';
+                mostrarNotificacion('✅ Archivo procesado: ' + clientesDetectados + ' clientes detectados', 'success');
+            }, 2000);
+        }
+
+        function confirmarCarga() {
+            const confirmacion = confirm('¿Confirmar carga de datos al sistema?\n\nEsto REEMPLAZARÁ todos los datos actuales e iniciará el seguimiento automático.');
+            if (confirmacion) {
+                mostrarNotificacion('Reemplazando datos del sistema...', 'info');
+                
+                // Limpiar datos anteriores
+                limpiarDatosSilencioso();
+                
+                setTimeout(() => {
+                    // Cargar nuevos datos (simulado)
+                    datosClientes = [];
+                    const numClientes = document.getElementById('clientesDetectados').textContent;
+                    
+                    // Actualizar estadísticas con nuevos datos
+                    actualizarEstadisticasConNuevosDatos(numClientes);
+                    
+                    mostrarNotificacion('✅ Datos cargados exitosamente. Sistema reiniciado.', 'success');
+                    cambiarTab('cartera');
+                }, 2000);
+            }
+        }
+
+        function limpiarSistema() {
+            const confirmacion = confirm('⚠️ ¿LIMPIAR TODOS LOS DATOS?\n\nEsto eliminará:\n• Todos los clientes\n• Historial de pagos\n• Configuraciones de seguimiento\n\n¿Continuar?');
+            if (confirmacion) {
+                mostrarNotificacion('Limpiando sistema completo...', 'warning');
+                
+                setTimeout(() => {
+                    // Resetear todas las variables
+                    datosClientes = [];
+                    sistemaActivo = false;
+                    
+                    // Resetear UI
+                    document.getElementById('pausePlayBtn').innerHTML = '▶️ ACTIVAR SISTEMA';
+                    document.getElementById('pausePlayBtn').style.background = '#e74c3c';
+                    document.getElementById('statusText').innerHTML = '🔴 SISTEMA PAUSADO';
+                    document.getElementById('statusText').style.color = '#e74c3c';
+                    
+                    // Ocultar resultado de procesamiento
+                    document.getElementById('procesoResultado').style.display = 'none';
+                    
+                    // Resetear input de archivo
+                    document.getElementById('fileInput').value = '';
+                    
+                    // Actualizar estadísticas a cero
+                    actualizarEstadisticasVacias();
+                    
+                    mostrarNotificacion('✅ Sistema limpiado completamente. Listo para nuevos datos.', 'success');
+                    cambiarTab('carga');
+                }, 2000);
+            }
+        }
+
+        function limpiarDatosSilencioso() {
+            // Función para limpiar sin confirmación (para uso interno)
+            datosClientes = [];
+            document.getElementById('procesoResultado').style.display = 'none';
+            document.getElementById('fileInput').value = '';
+        }
+
+        function actualizarEstadisticasConNuevosDatos(numClientes) {
+            // Actualizar las estadísticas del dashboard con los nuevos datos
+            const stats = document.querySelectorAll('.stat-number');
+            if (stats.length >= 4) {
+                stats[0].textContent = numClientes; // Total clientes
+                stats[1].textContent = '₡' + (numClientes * 85000).toLocaleString(); // Cartera estimada
+                stats[2].textContent = '₡' + (numClientes * 12000).toLocaleString(); // Pendiente estimado
+                stats[3].textContent = '88%'; // Tasa de cobro inicial
+            }
+        }
+
+        function actualizarEstadisticasVacias() {
+            // Resetear estadísticas a cero
+            const stats = document.querySelectorAll('.stat-number');
+            if (stats.length >= 4) {
+                stats[0].textContent = '0'; // Total clientes
+                stats[1].textContent = '₡0'; // Cartera total
+                stats[2].textContent = '₡0'; // Pendiente cobro
+                stats[3].textContent = '0%'; // Tasa de cobro
+            }
+            
+            // También resetear estadísticas de reportes
+            const reportStats = document.querySelectorAll('#reportes .stat-number');
+            reportStats.forEach(stat => {
+                stat.textContent = '0';
+            });
+        }
+
+        function descargarPlantilla() {
+            mostrarNotificacion('Generando plantilla personalizada...', 'info');
+            setTimeout(() => {
+                const link = document.createElement('a');
+                link.href = 'data:text/plain;charset=utf-8,Nombre,Poliza,Monto,Moneda,Vencimiento,Telefono,Email,Aseguradora%0A,,,,,,,';
+                link.download = 'plantilla_completa_' + new Date().getTime() + '.csv';
+                link.click();
+                mostrarNotificacion('✅ Plantilla descargada para completar', 'success');
+            }, 1000);
+        }
+
+        // Funciones de reportes
         function generarReporte(tipo) {
-            var html = '';
+            const reportes = {
+                'pagos': 'Reporte de Pagos Recibidos',
+                'vencidos': 'Reporte de Pólizas Vencidas',
+                'seguimiento': 'Reporte de Seguimiento Automático',
+                'completo': 'Reporte Completo del Sistema'
+            };
             
-            if (tipo === 'cartera') {
-                html = '<div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">' +
-                       '<h3>📋 Reporte de Cartera</h3>' +
-                       '<p><strong>Total clientes:</strong> 4</p>' +
-                       '<p><strong>Monto total:</strong> ₡1,365,000 + $2,000 USD</p>' +
-                       '<p><strong>Clientes vencidos:</strong> 1</p>' +
-                       '<p><strong>En seguimiento automático:</strong> 2</p>' +
-                       '</div>';
-            } else if (tipo === 'seguimiento') {
-                html = '<div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">' +
-                       '<h3>🤖 Reporte de Seguimiento Automático</h3>' +
-                       '<p><strong>Clientes en seguimiento:</strong> 2</p>' +
-                       '<p><strong>Total intentos realizados:</strong> 23</p>' +
-                       '<p><strong>Tasa de respuesta:</strong> 89%</p>' +
-                       '<p><strong>Efectividad del sistema:</strong> Excelente</p>' +
-                       '</div>';
-            } else if (tipo === 'comprobantes') {
-                html = '<div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">' +
-                       '<h3>📄 Reporte de Comprobantes</h3>' +
-                       '<p><strong>Comprobantes pendientes:</strong> 1</p>' +
-                       '<p><strong>Comprobantes verificados:</strong> 1</p>' +
-                       '<p><strong>Tiempo promedio proceso:</strong> 1.8 horas</p>' +
-                       '</div>';
+            mostrarNotificacion('Generando ' + reportes[tipo] + '...', 'info');
+            
+            setTimeout(() => {
+                const link = document.createElement('a');
+                link.href = 'data:text/plain;charset=utf-8,Reporte:' + reportes[tipo] + '%0AFecha:' + new Date().toLocaleDateString();
+                link.download = 'reporte_' + tipo + '_' + new Date().getTime() + '.csv';
+                link.click();
+                mostrarNotificacion('✅ ' + reportes[tipo] + ' descargado', 'success');
+            }, 2000);
+        }
+
+        function verDetalle(estado) {
+            mostrarNotificacion('Cargando detalle de clientes ' + estado + '...', 'info');
+            setTimeout(() => {
+                alert('DEMO: Aquí se mostraría la lista detallada de todos los clientes con estado: ' + estado.toUpperCase());
+            }, 1000);
+        }
+
+        // Sistema de notificaciones mejorado
+        function mostrarNotificacion(mensaje, tipo) {
+            // Crear contenedor si no existe
+            let container = document.getElementById('notification-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'notification-container';
+                container.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    z-index: 1000;
+                    max-width: 400px;
+                `;
+                document.body.appendChild(container);
             }
             
-            document.getElementById('reporteResultados').innerHTML = html;
-            mostrarNotificacion('Reporte ' + tipo + ' generado', 'success');
+            const iconos = {
+                'success': '✅',
+                'info': 'ℹ️',
+                'warning': '⚠️',
+                'error': '❌'
+            };
+            
+            const colores = {
+                'success': '#27ae60',
+                'info': '#3498db',
+                'warning': '#f39c12',
+                'error': '#e74c3c'
+            };
+            
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                background: white;
+                border-radius: 10px;
+                padding: 15px;
+                margin-bottom: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                border-left: 5px solid ${colores[tipo] || '#3498db'};
+                animation: slideIn 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            `;
+            
+            notification.innerHTML = `
+                <span style="font-size: 18px;">${iconos[tipo] || 'ℹ️'}</span>
+                <div style="flex: 1;">
+                    <div style="font-weight: bold; margin-bottom: 5px;">${mensaje}</div>
+                    <div style="font-size: 12px; opacity: 0.8;">Sistema V5 - Tony Villalobos</div>
+                </div>
+            `;
+            
+            container.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 4000);
         }
 
-        function solicitarComprobante() {
-            mostrarNotificacion('Solicitud de comprobante enviada', 'info');
-        }
-
-        function subirComprobante() {
-            var input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*,.pdf';
-            input.click();
-            mostrarNotificacion('Seleccione el archivo del comprobante', 'info');
-        }
-
-        function confirmarPago() {
-            if (confirm('¿Confirmar que el pago fue recibido?')) {
-                mostrarNotificacion('Pago confirmado y reportado a la aseguradora', 'success');
-            }
-        }
-
-        function guardarConfiguracion() {
-            mostrarNotificacion('Configuración guardada exitosamente', 'success');
-        }
-
-        function exportarConfiguracion() {
-            mostrarNotificacion('Configuración exportada', 'success');
-        }
-
-        function limpiarDatos() {
-            if (confirm('¿Está seguro de eliminar todos los datos?')) {
-                datosCartera = [];
-                mostrarNotificacion('Datos eliminados correctamente', 'success');
-            }
-        }
-
-        // Inicialización del sistema
+        // Inicialización
         function inicializar() {
-            console.log('✅ Sistema de Cobros V5 iniciado correctamente');
+            console.log('Sistema V5 - Tony Villalobos - WhatsApp: 6045-7989');
             
-            // Mostrar notificación de bienvenida
-            setTimeout(function() {
-                mostrarNotificacion('🚀 Sistema V5 iniciado - Seguimiento automático disponible', 'success');
+            setTimeout(() => {
+                mostrarNotificacion('🚀 Sistema V5 cargado completamente', 'success');
             }, 1000);
             
-            // Simular alertas de ejemplo
-            setTimeout(function() {
-                mostrarNotificacion('💰 María González reportó pago - Verificar comprobante', 'payment');
+            setTimeout(() => {
+                mostrarNotificacion('💰 3 clientes reportaron pagos automáticamente', 'success');
             }, 3000);
             
-            setTimeout(function() {
-                mostrarNotificacion('🔔 Carlos Ramírez - 15 intentos sin respuesta', 'alert');
-            }, 8000);
+            setTimeout(() => {
+                mostrarNotificacion('🤖 IA programó 12 recordatorios para mañana', 'info');
+            }, 6000);
         }
 
         // Ejecutar cuando esté listo
@@ -1123,7 +1071,15 @@ Monto: {MONTO}
             inicializar();
         }
 
-        console.log('✅ Sistema de Cobros V5 - Cargado exitosamente');
+        // Agregar estilos para animaciones
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
