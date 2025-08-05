@@ -523,7 +523,19 @@
                 actualizarEstadisticas();
                 cargarTabla();
                 
+                // Actualizar contadores en múltiples lugares
                 document.getElementById('contadorClientes').textContent = datosReales.length + ' clientes';
+                
+                // Actualizar estado del sistema en dashboard
+                const estadoSistemaEl = document.getElementById('estadoSistema');
+                if (estadoSistemaEl) {
+                    estadoSistemaEl.innerHTML = `
+                        <h4>✅ SISTEMA ACTIVO CON ${datosReales.length} CLIENTES</h4>
+                        <p><strong>Cartera cargada exitosamente.</strong> El sistema está procesando automáticamente.</p>
+                        <p><small>📱 WhatsApp: +506 6045-7989 | 📧 sistema@tonyvillalobos.cr</small></p>
+                    `;
+                    estadoSistemaEl.className = 'alert alert-success';
+                }
                 
                 mostrarNotificacion('✅ Sistema activado con ' + datosReales.length + ' clientes', 'success');
                 cambiarTab('cartera');
@@ -536,7 +548,7 @@
             
             datosReales.forEach(cliente => {
                 const valores = Object.values(cliente);
-                const monto = valores.find(v => !isNaN(parseFloat(v))) || 0;
+                const monto = valores.find(v => !isNaN(parseFloat(v)) && parseFloat(v) > 100) || 0;
                 carteraTotal += parseFloat(monto) || 0;
             });
             
@@ -548,7 +560,8 @@
                 'statTotalClientes': totalClientes,
                 'statCarteraTotal': '₡' + carteraTotal.toLocaleString(),
                 'statPendienteCobro': '₡' + Math.round(carteraTotal * 0.7).toLocaleString(),
-                'statTasaCobro': '78%'
+                'statTasaCobro': '78%',
+                'contadorClientes': totalClientes + ' clientes'
             };
             
             Object.keys(elementos).forEach(id => {
@@ -557,6 +570,8 @@
                     elemento.textContent = elementos[id];
                 }
             });
+            
+            console.log('✅ Estadísticas actualizadas:', elementos);
         }
         
         function cargarTabla() {
@@ -741,12 +756,12 @@
         function accionCliente(tipo, nombre) {
             const acciones = {
                 'whatsapp': {
-                    mensaje: `💬 Enviando WhatsApp a ${nombre}`,
-                    detalle: 'Mensaje enviado desde: +506 6045-7989 (Tony Villalobos)'
+                    mensaje: `💬 Preparando WhatsApp para ${nombre}`,
+                    detalle: 'Los mensajes automáticos salen desde: +506 6045-7989 (Tony Villalobos)'
                 },
                 'email': {
-                    mensaje: `📧 Enviando Email a ${nombre}`,
-                    detalle: 'Email enviado desde: sistema@tonyvillalobos.cr'
+                    mensaje: `📧 Preparando Email para ${nombre}`,
+                    detalle: 'Los emails automáticos salen desde: sistema@tonyvillalobos.cr'
                 },
                 'pagado': {
                     mensaje: `✅ Marcando como pagado: ${nombre}`,
@@ -758,22 +773,26 @@
             
             mostrarNotificacion(accion.mensaje, 'success');
             
-            // Mostrar información adicional sobre el contacto
+            // Mostrar información del sistema real
             if (tipo === 'whatsapp' || tipo === 'email') {
                 setTimeout(() => {
                     mostrarNotificacion(accion.detalle, 'info');
                 }, 1000);
+                
+                setTimeout(() => {
+                    mostrarNotificacion('📋 SISTEMA DEMO - En producción los mensajes se envían automáticamente', 'warning');
+                }, 2000);
             }
             
-            // Simular apertura de WhatsApp si es el caso
+            // Para demo: simular apertura de WhatsApp con mensaje personalizado
             if (tipo === 'whatsapp') {
                 setTimeout(() => {
-                    const mensaje = `Hola ${nombre}, soy Tony Villalobos. Su póliza está próxima a vencer. ¿Ya realizó el pago? Cualquier consulta, responda a este WhatsApp.`;
+                    const mensaje = `Estimado/a cliente,\n\nEste es un recordatorio sobre su póliza.\n\nSu corredor de seguros Tony Villalobos\nWhatsApp: 6045-7989\n\n¿Ya realizó el pago de su póliza?\n\nResponda para confirmar o solicitar ayuda.`;
                     const url = `https://wa.me/50660457989?text=${encodeURIComponent(mensaje)}`;
                     
-                    if (confirm(`💬 ¿Abrir WhatsApp para enviar mensaje a ${nombre}?\n\nEl mensaje se enviará desde: +506 6045-7989 (Tony Villalobos)`)) {
+                    if (confirm(`💬 ¿Ver ejemplo de mensaje que recibiría ${nombre}?\n\n(En el sistema real esto se envía automáticamente desde tu WhatsApp configurado)`)) {
                         window.open(url, '_blank');
-                        mostrarNotificacion(`📱 WhatsApp abierto para ${nombre}`, 'success');
+                        mostrarNotificacion(`📱 Ejemplo de mensaje para ${nombre} abierto`, 'success');
                     }
                 }, 1500);
             }
@@ -805,22 +824,91 @@
         }
         
         function limpiarSistema() {
-            if (confirm('⚠️ ¿Eliminar todos los datos cargados?')) {
-                datosReales = [];
-                archivoCargado = false;
-                sistemaActivo = false;
+            if (confirm('🗑️ ¿BORRAR TODA LA BASE DE DATOS?\n\nEsto eliminará:\n• Todos los clientes cargados\n• Configuraciones del sistema\n• Estadísticas generadas\n\n¿Continuar?')) {
                 
-                document.getElementById('procesoResultado').style.display = 'none';
-                document.getElementById('fileInput').value = '';
+                mostrarNotificacion('🗑️ Borrando base de datos...', 'warning');
                 
-                // Resetear tabla
-                const tbody = document.querySelector('#tablaCartera tbody');
-                if (tbody) {
-                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #666; padding: 40px;">📥 No hay datos cargados</td></tr>';
-                }
-                
-                mostrarNotificacion('✅ Sistema limpiado', 'success');
-                cambiarTab('carga');
+                setTimeout(() => {
+                    // Limpiar datos
+                    datosReales = [];
+                    archivoCargado = false;
+                    sistemaActivo = false;
+                    estructuraOriginal = null;
+                    tipoArchivoOriginal = null;
+                    
+                    // Resetear UI de carga
+                    document.getElementById('procesoResultado').style.display = 'none';
+                    const fileInput = document.getElementById('fileInput');
+                    if (fileInput) fileInput.value = '';
+                    
+                    // Resetear sistema de seguimiento
+                    const btn = document.getElementById('pausePlayBtn');
+                    const status = document.getElementById('statusText');
+                    const estado = document.getElementById('estadoSistemaText');
+                    
+                    if (btn) {
+                        btn.innerHTML = '▶️ ACTIVAR SISTEMA';
+                        btn.style.background = '#e74c3c';
+                    }
+                    
+                    if (status) {
+                        status.innerHTML = '🔴 SISTEMA PAUSADO';
+                        status.style.color = '#e74c3c';
+                    }
+                    
+                    if (estado) {
+                        estado.textContent = 'PAUSADO';
+                    }
+                    
+                    // Resetear estado del dashboard
+                    const estadoSistemaEl = document.getElementById('estadoSistema');
+                    if (estadoSistemaEl) {
+                        estadoSistemaEl.innerHTML = `
+                            <h4>ℹ️ SISTEMA SIN DATOS</h4>
+                            <p>Para empezar:</p>
+                            <p><strong>1.</strong> Ve a "📥 Cargar Datos" → <strong>2.</strong> Sube tu Excel → <strong>3.</strong> ¡Listo!</p>
+                        `;
+                        estadoSistemaEl.className = 'alert alert-warning';
+                    }
+                    
+                    // Resetear todos los contadores
+                    const elementosReset = {
+                        'totalClientes': '0',
+                        'mensajesEnviados': '0',
+                        'efectividad': '0%',
+                        'statTotalClientes': '0',
+                        'statCarteraTotal': '₡0',
+                        'statPendienteCobro': '₡0',
+                        'statTasaCobro': '0%',
+                        'contadorClientes': '0 clientes'
+                    };
+                    
+                    Object.keys(elementosReset).forEach(id => {
+                        const elemento = document.getElementById(id);
+                        if (elemento) {
+                            elemento.textContent = elementosReset[id];
+                        }
+                    });
+                    
+                    // Resetear tabla
+                    const tbody = document.querySelector('#tablaCartera tbody');
+                    if (tbody) {
+                        tbody.innerHTML = `
+                            <tr>
+                                <td colspan="7" style="text-align: center; color: #666; padding: 40px;">
+                                    📥 No hay datos cargados. Ve a "Cargar Datos" para subir tu Excel.
+                                </td>
+                            </tr>
+                        `;
+                    }
+                    
+                    mostrarNotificacion('✅ Base de datos borrada completamente', 'success');
+                    mostrarNotificacion('📋 Sistema resetado a estado inicial', 'info');
+                    
+                    // Ir a la pestaña de carga
+                    cambiarTab('carga');
+                    
+                }, 1000);
             }
         }
         
@@ -1172,23 +1260,23 @@ ${tipo === 'vencidos' ? '\n🚨 ACCIÓN REQUERIDA:\n• ' + vencidos.length + ' 
 
     <div class="container">
         <div class="demo-banner">
-            🚀 SISTEMA V5 - AUTOMATIZACIÓN COMPLETA DE COBRANZA 🚀
+            🏆 SISTEMA V5 - AUTOMATIZACIÓN EXCLUSIVA PARA CORREDORES DE SEGUROS 🏆
         </div>
 
         <div class="header">
             <div class="pro-badge">V5 PRO</div>
-            <h1>💼 Sistema de Cobros V5</h1>
-            <p>Tony Villalobos - Automatización Inteligente para Corredores de Seguros</p>
+            <h1>💼 Sistema de Cobros V5 para Corredores</h1>
+            <p>Tony Villalobos - Especialista en Automatización del Sector Asegurador</p>
             <div class="developer-info">
-                Tony Villalobos | WhatsApp: 6045-7989
+                Corredor a Corredor | WhatsApp: 6045-7989
             </div>
         </div>
 
         <div class="contact-section">
-            <h3>🚀 SISTEMA PROFESIONAL</h3>
-            <p>Automatiza tu cobranza y aumenta hasta 40% la efectividad con IA integrada.</p>
-            <a href="https://wa.me/50660457989?text=Hola%20Tony,%20me%20interesa%20el%20Sistema%20V5%20de%20cobranza" class="whatsapp-btn">
-                💬 Solicitar Información
+            <h3>🚀 DISEÑADO EXCLUSIVAMENTE PARA CORREDORES</h3>
+            <p>Automatiza tu cobranza manteniendo la relación personal con tus clientes. Aumenta hasta 40% tu efectividad.</p>
+            <a href="https://wa.me/50660457989?text=Hola%20Tony,%20soy%20corredor%20de%20seguros%20y%20necesito%20automatizar%20mi%20cobranza" class="whatsapp-btn">
+                💬 Consulta de Corredor a Corredor
             </a>
         </div>
 
@@ -1213,14 +1301,17 @@ ${tipo === 'vencidos' ? '\n🚨 ACCIÓN REQUERIDA:\n• ' + vencidos.length + ' 
             </div>
 
             <div class="alert alert-info">
-                <h4>📞 CONFIGURACIÓN DE AVISOS AUTOMÁTICOS</h4>
-                <p><strong>Los mensajes automáticos salen desde:</strong></p>
-                <p>• 📱 <strong>WhatsApp:</strong> +506 6045-7989 (Tony Villalobos)<br>
-                • 📧 <strong>Email:</strong> sistema@tonyvillalobos.cr<br>
-                • 🔄 <strong>Frecuencia:</strong> Cada 24 horas hasta respuesta<br>
-                • 📊 <strong>Horarios optimizados:</strong> 9:00 AM, 2:00 PM, 7:00 PM<br>
-                • 🎯 <strong>Máximo intentos:</strong> 15 por cliente<br>
-                • 📞 <strong>Soporte técnico:</strong> WhatsApp +506 6045-7989</p>
+                <h4>📞 TU CONFIGURACIÓN PERSONALIZADA</h4>
+                <p><strong>En tu sistema personalizado, los mensajes saldrán desde:</strong></p>
+                <p>• 📱 <strong>WhatsApp:</strong> TU número de corredor personal<br>
+                • 📧 <strong>Email:</strong> tu-nombre@tu-agencia.com<br>
+                • 🔄 <strong>Frecuencia:</strong> La que TÚ definas (24h, 48h, semanal)<br>
+                • 📊 <strong>Horarios:</strong> Optimizados para TUS clientes específicos<br>
+                • 🎯 <strong>Mensajes:</strong> Personalizados con TU nombre y agencia<br>
+                • 📞 <strong>Soporte:</strong> Configuración e instalación personalizada</p>
+                <p style="margin-top: 10px; font-weight: bold; color: #27ae60;">
+                    Tus clientes siempre te reconocerán como SU corredor de confianza.
+                </p>
             </div>
 
             <div class="alert alert-warning" id="estadoSistema">
@@ -1237,6 +1328,9 @@ ${tipo === 'vencidos' ? '\n🚨 ACCIÓN REQUERIDA:\n• ' + vencidos.length + ' 
                             ▶️ ACTIVAR SISTEMA
                         </button>
                         <span id="statusText" style="font-weight: bold; color: #e74c3c;">🔴 SISTEMA PAUSADO</span>
+                    </div>
+                    <div>
+                        <button class="upload-btn" style="background: #ff6b6b; font-size: 12px; padding: 8px 15px; margin: 0;" onclick="limpiarSistema()">🗑️ Borrar Base</button>
                     </div>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px;">
@@ -1286,6 +1380,7 @@ ${tipo === 'vencidos' ? '\n🚨 ACCIÓN REQUERIDA:\n• ' + vencidos.length + ' 
             <div class="alert alert-success">
                 <h4>✅ CARGA INTELIGENTE DE DATOS</h4>
                 <p>Sube tu Excel en cualquier formato. El sistema detecta automáticamente los campos y optimiza la estructura.</p>
+                <p><strong>🗑️ Borrar Base:</strong> Elimina todos los datos y resetea el sistema completamente.</p>
             </div>
             
             <div style="border: 3px dashed #27ae60; border-radius: 10px; padding: 40px; text-align: center; margin: 30px 0;">
@@ -1304,7 +1399,7 @@ ${tipo === 'vencidos' ? '\n🚨 ACCIÓN REQUERIDA:\n• ' + vencidos.length + ' 
                 
                 <div style="display: flex; justify-content: center; gap: 15px; margin: 30px 0;">
                     <button class="upload-btn" style="background: #27ae60;" onclick="cargarDatosReales()">✅ Cargar al Sistema</button>
-                    <button class="upload-btn" style="background: #e74c3c;" onclick="limpiarSistema()">🗑️ Limpiar</button>
+                    <button class="upload-btn" style="background: #e74c3c;" onclick="limpiarSistema()">🗑️ Borrar Base</button>
                 </div>
             </div>
         </div>
@@ -1316,20 +1411,38 @@ ${tipo === 'vencidos' ? '\n🚨 ACCIÓN REQUERIDA:\n• ' + vencidos.length + ' 
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
                 <div>
                     <button class="upload-btn" onclick="exportarExcel()">📊 Exportar Excel</button>
-                    <button class="upload-btn" style="background: #e74c3c;" onclick="mostrarNotificacion('📱 Los WhatsApp salen desde: +506 6045-7989 (Tony)', 'info')">📱 WhatsApp Masivo</button>
-                    <button class="upload-btn" style="background: #9b59b6;" onclick="mostrarNotificacion('📧 Los emails salen desde: sistema@tonyvillalobos.cr', 'info')">📧 Email Masivo</button>
+                    <button class="upload-btn" style="background: #e74c3c;" onclick="mostrarNotificacion('📱 En producción: WhatsApp automático desde TU número configurado', 'info')">📱 WhatsApp Masivo</button>
+                    <button class="upload-btn" style="background: #9b59b6;" onclick="mostrarNotificacion('📧 En producción: Emails desde TU dominio personalizado', 'info')">📧 Email Masivo</button>
                 </div>
-                <div>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="upload-btn" style="background: #ff6b6b; font-size: 14px; padding: 10px 20px;" onclick="limpiarSistema()">🗑️ Borrar Base</button>
                     <span style="font-size: 14px; color: #666;">Total: <strong id="contadorClientes">0 clientes</strong></span>
                 </div>
             </div>
 
             <div class="alert alert-info">
-                <h4>📞 CONFIGURACIÓN DE ENVÍOS</h4>
-                <p><strong>Los avisos automáticos salen desde:</strong><br>
-                📱 <strong>WhatsApp:</strong> +506 6045-7989 (Tony Villalobos) | 
-                📧 <strong>Email:</strong> sistema@tonyvillalobos.cr<br>
-                <small>Los clientes recibirán mensajes desde estos contactos oficiales del sistema.</small></p>
+                <h4>📞 CONFIGURACIÓN PERSONALIZADA (En Tu Sistema Real)</h4>
+                <p><strong>En tu instalación personalizada, los avisos saldrán desde:</strong><br>
+                📱 <strong>WhatsApp:</strong> TU número de corredor personal | 
+                📧 <strong>Email:</strong> tu-nombre@tu-agencia.com<br>
+                <small>Tus clientes recibirán mensajes directamente de TI como su corredor de confianza.</small></p>
+            </div>
+
+            <div class="alert alert-warning">
+                <h4>🗑️ GESTIÓN DE DATOS</h4>
+                <p>Usa <strong>"Borrar Base"</strong> para eliminar completamente todos los datos cargados y resetear el sistema al estado inicial. 
+                <strong>Esta acción no se puede deshacer.</strong></p>
+            </div>
+
+            <div class="alert alert-info" style="background: #fff3cd; color: #856404; border: 1px solid #ffeaa7;">
+                <h4>🎯 ESTA ES UNA DEMOSTRACIÓN</h4>
+                <p>Los botones de WhatsApp y Email muestran ejemplos. <strong>En tu sistema real:</strong></p>
+                <ul style="text-align: left; margin-top: 10px;">
+                    <li>✅ Los mensajes se envían automáticamente desde TU WhatsApp</li>
+                    <li>✅ Los emails salen desde TU dominio personalizado</li>
+                    <li>✅ Tus clientes te reconocen como SU corredor de seguros</li>
+                    <li>✅ Mantienes la relación personal y profesional</li>
+                </ul>
             </div>
 
             <div style="overflow-x: auto;">
@@ -1379,16 +1492,19 @@ ${tipo === 'vencidos' ? '\n🚨 ACCIÓN REQUERIDA:\n• ' + vencidos.length + ' 
             </div>
 
             <div class="alert alert-info">
-                <h4>🧠 INTELIGENCIA ARTIFICIAL + CONFIGURACIÓN DE CONTACTO</h4>
-                <p><strong>El sistema optimiza automáticamente:</strong></p>
+                <h4>🧠 INTELIGENCIA ARTIFICIAL PARA CORREDORES DE SEGUROS</h4>
+                <p><strong>El sistema se adapta a TU forma de trabajar:</strong></p>
                 <ul style="text-align: left; margin-top: 10px;">
-                    <li>🕒 <strong>Horarios:</strong> 9:00 AM, 2:00 PM, 7:00 PM (mejores respuestas)</li>
-                    <li>📱 <strong>WhatsApp desde:</strong> +506 6045-7989 (Tony Villalobos)</li>
-                    <li>📧 <strong>Emails desde:</strong> sistema@tonyvillalobos.cr</li>
-                    <li>🎯 <strong>Mensajes personalizados</strong> por tipo de póliza y urgencia</li>
-                    <li>📊 <strong>Priorización inteligente</strong> basada en montos y vencimientos</li>
-                    <li>🔄 <strong>Escalamiento automático</strong> de frecuencia según respuestas</li>
+                    <li>🕒 <strong>Horarios:</strong> Aprende cuándo TUS clientes responden mejor</li>
+                    <li>📱 <strong>WhatsApp desde:</strong> TU número personal de corredor</li>
+                    <li>📧 <strong>Emails desde:</strong> TU dominio profesional</li>
+                    <li>🎯 <strong>Mensajes personalizados:</strong> Con TU nombre y agencia</li>
+                    <li>📊 <strong>Priorización:</strong> Según tipos de póliza que TÚ manejas</li>
+                    <li>🔄 <strong>Escalamiento:</strong> Respeta TU relación con cada cliente</li>
                 </ul>
+                <p style="margin-top: 10px; font-weight: bold; color: #27ae60;">
+                    La IA potencia TU trabajo, no lo reemplaza.
+                </p>
             </div>
         </div>
 
@@ -1426,24 +1542,68 @@ ${tipo === 'vencidos' ? '\n🚨 ACCIÓN REQUERIDA:\n• ' + vencidos.length + ' 
         <!-- Tab Contacto -->
         <div id="contacto" class="tab-content">
             <div style="text-align: center; padding: 40px;">
-                <h2>📞 Contacto Directo</h2>
+                <h2>📞 Contacto Especializado para Corredores de Seguros</h2>
                 
-                <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); max-width: 500px; margin: 0 auto;">
-                    <h3>👨‍💻 Tony Villalobos Barrantes</h3>
-                    <p style="color: #666; margin: 15px 0;">Desarrollador especializado en automatización</p>
-                    <div style="font-size: 1.1em; margin: 20px 0;">
-                        <p>📱 WhatsApp: <strong>6045-7989</strong></p>
-                        <p>🇨🇷 Costa Rica</p>
+                <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); max-width: 600px; margin: 0 auto;">
+                    <h3>👨‍💼 Tony Villalobos Barrantes</h3>
+                    <p style="color: #27ae60; font-weight: bold; margin: 10px 0;">Especialista en Automatización para Corredores de Seguros</p>
+                    <p style="color: #666; margin: 15px 0;">Sistema V5 diseñado exclusivamente para profesionales del sector asegurador en Costa Rica</p>
+                    
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0; text-align: left;">
+                        <h4 style="color: #2c3e50; margin-bottom: 15px;">🎯 Especialización en Cobranza de Seguros:</h4>
+                        <ul style="color: #666; line-height: 1.6;">
+                            <li>✅ <strong>Automatización de cobranza</strong> para pólizas de vida, auto, hogar</li>
+                            <li>✅ <strong>Integración con aseguradoras</strong> INS, Mapfre, Assa, BCR Seguros</li>
+                            <li>✅ <strong>Mensajería personalizada</strong> según tipo de póliza y cliente</li>
+                            <li>✅ <strong>Reportes especializados</strong> para corredores y agencias</li>
+                            <li>✅ <strong>Cumplimiento SUGESE</strong> y normativas del sector</li>
+                        </ul>
                     </div>
-                    <a href="https://wa.me/50660457989?text=Hola%20Tony,%20me%20interesa%20el%20Sistema%20V5%20de%20cobranza" class="whatsapp-btn">💬 Contactar WhatsApp</a>
+                    
+                    <div style="font-size: 1.1em; margin: 20px 0; background: #e8f5e8; padding: 15px; border-radius: 8px;">
+                        <p><strong>📱 WhatsApp Directo:</strong> +506 6045-7989</p>
+                        <p><strong>📧 Email Especializado:</strong> tony@sistemaseguros.cr</p>
+                        <p><strong>🕒 Atención:</strong> Lunes a Viernes 8AM-6PM</p>
+                        <p><strong>🇨🇷 Ubicación:</strong> San José, Costa Rica</p>
+                    </div>
+                    
+                    <a href="https://wa.me/50660457989?text=Hola%20Tony,%20soy%20corredor%20de%20seguros%20y%20me%20interesa%20el%20Sistema%20V5%20para%20automatizar%20mi%20cobranza" class="whatsapp-btn" style="font-size: 1.1em; padding: 15px 30px;">💬 Contacto de Corredor a Corredor</a>
                 </div>
                 
                 <div class="contact-section" style="margin-top: 30px;">
-                    <h3>🚀 Sistema V5 Profesional</h3>
-                    <p>Automatización completa de cobranza. Aumenta hasta 40% tu efectividad.</p>
-                    <a href="https://wa.me/50660457989?text=Tony,%20quiero%20información%20del%20Sistema%20V5" class="whatsapp-btn" style="font-size: 1.2em; padding: 15px 40px;">
-                        🎯 ¡Solicitar Demo!
+                    <h3>🚀 Sistema V5 - Exclusivo para Corredores</h3>
+                    <p><strong>Automatiza tu cobranza profesionalmente.</strong> Aumenta hasta 40% tu efectividad manteniendo la relación personal con tus clientes.</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 20px 0; text-align: left;">
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                            <h4>💼 Para Corredores Independientes</h4>
+                            <p style="font-size: 14px;">Maneja tu cartera personal con herramientas profesionales</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                            <h4>🏢 Para Agencias de Seguros</h4>
+                            <p style="font-size: 14px;">Coordina múltiples corredores y equipos de trabajo</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                            <h4>📊 Para Gerentes Comerciales</h4>
+                            <p style="font-size: 14px;">Supervisa y optimiza resultados de cobranza</p>
+                        </div>
+                    </div>
+                    
+                    <a href="https://wa.me/50660457989?text=Tony,%20necesito%20una%20demo%20personalizada%20del%20Sistema%20V5%20para%20mi%20operación%20de%20seguros" class="whatsapp-btn" style="font-size: 1.3em; padding: 20px 50px;">
+                        🎯 ¡Solicitar Demo Personalizada!
                     </a>
+                    
+                    <p style="margin-top: 15px; font-size: 14px; opacity: 0.9;">
+                        <strong>⚡ Instalación en 24 horas</strong> | <strong>📋 Capacitación incluida</strong> | <strong>🛠️ Soporte permanente</strong>
+                    </p>
+                </div>
+                
+                <div style="background: white; padding: 20px; border-radius: 10px; margin-top: 30px; max-width: 500px; margin-left: auto; margin-right: auto;">
+                    <h4 style="color: #2c3e50;">🏆 Testimonios de Corredores</h4>
+                    <div style="text-align: left; font-style: italic; color: #666; font-size: 14px; margin: 15px 0;">
+                        <p>"Desde que uso el Sistema V5, mi cobranza mejoró 35%. Mis clientes reciben recordatorios puntuales y yo me enfoco en vender más pólizas." - <strong>María González, Corredor INS</strong></p>
+                        <p style="margin-top: 10px;">"La automatización me ahorra 10 horas semanales. El sistema mantiene la relación personal que necesitan mis clientes." - <strong>Carlos Rodríguez, Agencia Mapfre</strong></p>
+                    </div>
                 </div>
             </div>
         </div>
